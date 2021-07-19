@@ -1,0 +1,28 @@
+{
+    "name": "luyiyuan\/toolkits",
+    "description": "LuYiYuan 's Code Toolkits.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "LuYiYuan",
+            "email": "i@luyiyuan.work"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "LuYiYuan\\Toolkits\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LuYiYuan\\Tests\\": "tests/"
+        }
+    }
+}
