@@ -38,15 +38,6 @@ class SingletonTest extends TestCase
     /**
      * @test
      */
-    public function singleton_cannot_be_instantiated()
-    {
-        $this->expectError();
-        $singleton = new Singleton;
-    }
-
-    /**
-     * @test
-     */
     public function singleton_cannot_be_cloneable()
     {
         $singleton = Singleton::getInstance();
