@@ -18,12 +18,12 @@
     },
     "autoload": {
         "psr-4": {
-            "LuYiYuan\\Toolkits\\": "src"
+            "Luyiyuan\\Toolkits\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LuYiYuan\\Tests\\": "tests/"
+            "Luyiyuan\\Toolkits\\Tests\\": "tests/"
         }
     }
 }
