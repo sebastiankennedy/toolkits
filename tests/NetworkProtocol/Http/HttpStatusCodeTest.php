@@ -26,4 +26,9 @@ class HttpStatusCodeTest extends TestCase
         parent::setUp();
         $this->httpStatusCode = new HttpStatusCode();
     }
+
+    public function testDefaultCode(): void
+    {
+        assert($this->httpStatusCode::DEFAULT === 200);
+    }
 }
