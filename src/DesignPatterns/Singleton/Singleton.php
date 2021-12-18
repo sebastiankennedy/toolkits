@@ -26,7 +26,7 @@ class Singleton implements JsonSerializable
     /**
      * @var bool
      */
-    private static $again = false;
+    private static bool $again = false;
 
     /**
      * 将类的构造函数设为私有。
