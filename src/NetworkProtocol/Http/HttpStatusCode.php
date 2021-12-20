@@ -89,7 +89,7 @@ final class HttpStatusCode
         self::LENGTH_REQUIRED => 'Length Required',
         self::PRECONDITION_FAILED => 'Precondition Failed',
         self::REQUEST_ENTITY_TOO_LARGE => 'Request Entity Too Large',
-        self::REQUEST_URI_TOO_LARGE => 'Request Rri Too Large',
+        self::REQUEST_URI_TOO_LARGE => 'Request Uri Too Large',
         self::UNSUPPORTED_MEDIA_TYPE => 'Unsupported Media Type',
         self::REQUESTED_RANGE_NOT_SATISFIABLE => 'Requested Range Not Satisfiable',
         self::EXPECTATION_FAILED => 'Expectation Failed',
