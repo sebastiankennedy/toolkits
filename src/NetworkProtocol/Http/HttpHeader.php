@@ -24,6 +24,7 @@ final class HttpHeader
     public const ACCEPT_TEXT_HTML = 'text/html';
     public const ACCEPT_APPLICATION_XML = 'application/xml';
     public const ACCEPT_APPLICATION_JSON = 'application/json';
+    public const ACCEPT_DEFAULT = self::ACCEPT_APPLICATION_JSON;
 
     /**
      * 客户端用来告知服务端：客户端它可以处理的字符集类型
@@ -35,6 +36,7 @@ final class HttpHeader
      */
     public const ACCEPT_CHARSET = 'Accept-Charset';
     public const ACCEPT_CHARSET_UTF8 = 'utf-8';
+    public const ACCEPT_CHARSET_DEFAULT = self::ACCEPT_CHARSET_UTF8;
 
     /**
      * 客户端用来告知服务端：客户端它可以理解的压缩算法
@@ -48,6 +50,7 @@ final class HttpHeader
     public const ACCEPT_ENCODING_COMPRESS = 'compress';
     public const ACCEPT_ENCODING_DEFLATE = 'deflate';
     public const ACCEPT_ENCODING_BR = 'br';
+    public const ACCEPT_ENCODING_DEFAULT = self::ACCEPT_ENCODING_GZIP;
 
 
     /**
