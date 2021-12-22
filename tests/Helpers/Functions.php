@@ -24,9 +24,14 @@ class Functions extends TestCase
             1030 => '1.01 KB',
             1031 => '1.01 KB',
         ];
-        for ($num = 1022; $num < 1032; $num++) {
-            echo 123;
-            self::assertEquals($mapping[$num], human_readable_file_size($num));
+        for ($bytes = 1022; $bytes < 1032; $bytes++) {
+            self::assertEquals($mapping[$bytes], human_readable_file_size($bytes));
         }
+
+        $bytes = 1032;
+        self::assertEquals("1.008 KB", human_readable_file_size($bytes, 3));
+
+        $bytes = 1024 * 1024 * 1024;
+        self::assertEquals("1.0000 GB", human_readable_file_size($bytes, 4));
     }
 }

@@ -1,5 +1,5 @@
 {
-    "name": "luyiyuan\/toolkits",
+    "name": "luyiyuan/toolkits",
     "description": "LuYiYuan 's Code Toolkits.",
     "license": "MIT",
     "authors": [
@@ -19,7 +19,10 @@
     "autoload": {
         "psr-4": {
             "Luyiyuan\\Toolkits\\": "src"
-        }
+        },
+        "files": [
+            "./src/Helpers/Functions.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
