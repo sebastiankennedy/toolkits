@@ -40,6 +40,7 @@ return (new PhpCsFixer\Config())
                 'property',
             ],
         ],
+        'not_operator_with_successor_space' => true
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

@@ -8,7 +8,4 @@ use Luyiyuan\Toolkits\Tests\TestCase;
 
 class HttpHeaderTest extends TestCase
 {
-    public function testHttpHeaders(): void
-    {
-    }
 }
