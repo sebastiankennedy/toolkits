@@ -33,18 +33,18 @@ class Functions extends TestCase
         $bytes = 1032;
         self::assertEquals("1.008 KB", human_readable_file_size($bytes, 3));
 
-        $bytes = 1024 * 1024 * 1024;
+        $bytes = 1024 * 1024 * 1024 + 5;
         self::assertEquals("1.0000 GB", human_readable_file_size($bytes, 4));
     }
 
     public function testCompareFloatValue(): void
     {
-        assertEquals(true, compare_float_value(1 - 0.8, 0.2));
-        assertEquals(true, compare_float_value(1 - 0.8, 0.3, '!=='));
-        assertEquals(true, compare_float_value(1 - 0.8, 0.3, '<'));
-        assertEquals(false, compare_float_value(1 - 0.8, 0.3, '>'));
-        assertEquals(true, compare_float_value(1 - 0.8, 0.2, '<='));
-        assertEquals(true, compare_float_value(1 - 0.8, 0.3, '<='));
-        assertEquals(false, compare_float_value(1 - 0.8, 0.3, '>='));
+        self::assertEquals(true, compare_float_value(1 - 0.8, 0.2));
+        self::assertEquals(true, compare_float_value(1 - 0.8, 0.3, '!=='));
+        self::assertEquals(true, compare_float_value(1 - 0.8, 0.3, '<'));
+        self::assertEquals(false, compare_float_value(1 - 0.8, 0.3, '>'));
+        self::assertEquals(true, compare_float_value(1 - 0.8, 0.2, '<='));
+        self::assertEquals(true, compare_float_value(1 - 0.8, 0.3, '<='));
+        self::assertEquals(false, compare_float_value(1 - 0.8, 0.3, '>='));
     }
 }
