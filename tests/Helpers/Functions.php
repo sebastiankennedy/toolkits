@@ -6,7 +6,9 @@ namespace Luyiyuan\Toolkits\Tests\Helpers;
 
 use Luyiyuan\Toolkits\Tests\TestCase;
 
+use function Luyiyuan\Toolkits\Helpers\compare_float_value;
 use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
+use function PHPUnit\Framework\assertEquals;
 
 class Functions extends TestCase
 {
@@ -33,5 +35,16 @@ class Functions extends TestCase
 
         $bytes = 1024 * 1024 * 1024;
         self::assertEquals("1.0000 GB", human_readable_file_size($bytes, 4));
+    }
+
+    public function testCompareFloatValue(): void
+    {
+        assertEquals(true, compare_float_value(1 - 0.8, 0.2));
+        assertEquals(true, compare_float_value(1 - 0.8, 0.3, '!=='));
+        assertEquals(true, compare_float_value(1 - 0.8, 0.3, '<'));
+        assertEquals(false, compare_float_value(1 - 0.8, 0.3, '>'));
+        assertEquals(true, compare_float_value(1 - 0.8, 0.2, '<='));
+        assertEquals(true, compare_float_value(1 - 0.8, 0.3, '<='));
+        assertEquals(false, compare_float_value(1 - 0.8, 0.3, '>='));
     }
 }
