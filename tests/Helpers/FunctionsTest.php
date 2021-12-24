@@ -10,7 +10,7 @@ use function Luyiyuan\Toolkits\Helpers\compare_float_value;
 use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
 use function PHPUnit\Framework\assertEquals;
 
-class Functions extends TestCase
+class FunctionsTest extends TestCase
 {
     public function testHumanReadableFileSize(): void
     {
