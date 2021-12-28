@@ -7,11 +7,17 @@ namespace Luyiyuan\Toolkits\Tests\Helpers;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
 use function Luyiyuan\Toolkits\Helpers\compare_float_value;
+use function Luyiyuan\Toolkits\Helpers\compare_grade;
 use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
-use function PHPUnit\Framework\assertEquals;
 
+/**
+ *
+ */
 class FunctionsTest extends TestCase
 {
+    /**
+     * @return void
+     */
     public function testHumanReadableFileSize(): void
     {
         $mapping = [
@@ -37,6 +43,9 @@ class FunctionsTest extends TestCase
         self::assertEquals("1.0000 GB", human_readable_file_size($bytes, 4));
     }
 
+    /**
+     * @return void
+     */
     public function testCompareFloatValue(): void
     {
         self::assertEquals(true, compare_float_value(1 - 0.8, 0.2));
@@ -46,5 +55,25 @@ class FunctionsTest extends TestCase
         self::assertEquals(true, compare_float_value(1 - 0.8, 0.2, '<='));
         self::assertEquals(true, compare_float_value(1 - 0.8, 0.3, '<='));
         self::assertEquals(false, compare_float_value(1 - 0.8, 0.3, '>='));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCompareGrade(): void
+    {
+        $a = $b = '一年级';
+        self::assertEquals(0, compare_grade($a, $b));
+
+        $a = '二年级';
+        $b = '三年级';
+        self::assertEquals(-1, compare_grade($a, $b));
+
+        $a = '高三';
+        $b = '初二';
+        self::assertEquals(1, compare_grade($a, $b));
+
+        self::assertEquals(-1, compare_grade($a, null));
+        self::assertEquals(-1, compare_grade($a, '大学'));
     }
 }
