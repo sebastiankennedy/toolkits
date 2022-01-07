@@ -18,7 +18,7 @@ class FunctionsTest extends TestCase
     /**
      * @return void
      */
-    public function testHumanReadableFileSize(): void
+    public function test_human_readable_file_size(): void
     {
         $mapping = [
             1022 => '1022 B',
@@ -46,7 +46,7 @@ class FunctionsTest extends TestCase
     /**
      * @return void
      */
-    public function testCompareFloatValue(): void
+    public function test_compare_float_value(): void
     {
         self::assertEquals(true, compare_float_value(1 - 0.8, 0.2));
         self::assertEquals(true, compare_float_value(1 - 0.8, 0.3, '!=='));
@@ -60,7 +60,7 @@ class FunctionsTest extends TestCase
     /**
      * @return void
      */
-    public function testCompareGrade(): void
+    public function test_compare_grade(): void
     {
         $a = $b = '一年级';
         self::assertEquals(0, compare_grade($a, $b));
