@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luyiyuan\Toolkits\Helpers;
 
+use InvalidArgumentException;
+
 if (! function_exists('human_readable_file_size')) {
     /**
      * @param  int  $bytes
@@ -13,12 +15,12 @@ if (! function_exists('human_readable_file_size')) {
     function human_readable_file_size(int $bytes, int $decimals = 2): string
     {
         if ($bytes < 1024) {
-            return $bytes.' B';
+            return $bytes . ' B';
         }
 
         $factor = floor(log($bytes, 1024));
 
-        return sprintf("%.{$decimals}f ", $bytes / pow(1024, $factor)).[
+        return sprintf("%.{$decimals}f ", $bytes / pow(1024, $factor)) . [
                 'B',
                 'KB',
                 'MB',
@@ -129,5 +131,20 @@ if (! function_exists('compare_grade')) {
         $orderOfB = $orders[$b] ?? 99999;
 
         return $orderOfA <=> $orderOfB;
+    }
+}
+
+if (! function_exists('double')) {
+    /**
+     * @param  int|float  $value
+     * @return int|float
+     */
+    function double($value)
+    {
+        if (is_int($value) || is_float($value)) {
+            return $value * 2;
+        }
+
+        throw new InvalidArgumentException('The value must be an integer or float.');
     }
 }
