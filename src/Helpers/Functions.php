@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Luyiyuan\Toolkits\Helpers;
 
 use InvalidArgumentException;
+use RuntimeException;
 
 if (! function_exists('human_readable_file_size')) {
     /**
@@ -148,3 +149,92 @@ if (! function_exists('double')) {
         throw new InvalidArgumentException('The value must be an integer or float.');
     }
 }
+
+if (! function_exists('fail_if_file_not_exists')) {
+    /**
+     * 文件不存在则抛出异常
+     *
+     * @param  string  $file
+     * @return void
+     */
+    function fail_if_file_not_exists(string $file): void
+    {
+        if (! file_exists($file)) {
+            throw new InvalidArgumentException("The file $file not exists.");
+        }
+    }
+}
+
+if (! function_exists('fail_if_file_not_readable')) {
+    /**
+     * 文件不可读则抛出异常
+     *
+     * @param  string  $file
+     * @return void
+     */
+    function fail_if_file_not_readable(string $file): void
+    {
+        if (! is_readable($file)) {
+            throw new InvalidArgumentException("The file $file is not readable.");
+        }
+    }
+}
+
+if (! function_exists('fail_if_not_file')) {
+    /**
+     * 文件不是正常文件则抛出异常
+     *
+     * @param $file
+     * @return void
+     */
+    function fail_if_not_file($file): void
+    {
+        fail_if_file_not_exists($file);
+
+        if (! is_file($file)) {
+            throw new InvalidArgumentException("The file $file is not a file.");
+        }
+    }
+}
+
+if (! function_exists('fail_if_not_dir')) {
+    /**
+     * 如果文件不是一个目录则抛出异常
+     *
+     * @param $file
+     * @return void
+     */
+    function fail_if_not_dir($file): void
+    {
+        fail_if_file_not_exists($file);
+        if (! is_dir($file)) {
+            throw new InvalidArgumentException("The file $file is not a dir.");
+        }
+    }
+}
+
+if (! function_exists('fail_if_file_get_no_contents')) {
+    /**
+     * 如果文件获取不到内容则抛出异常
+     *
+     * @param $file
+     * @return string
+     */
+    function fail_if_file_get_no_contents($file): string
+    {
+        // 判断是否为本地文件
+        if (filter_var($file, FILTER_VALIDATE_URL) === false) {
+            fail_if_file_not_exists($file);
+            fail_if_file_not_readable($file);
+        }
+
+        $data = file_get_contents($file);
+        if ($data === false) {
+            throw new RuntimeException("failed to get contents from file $file");
+        }
+
+        return $data;
+    }
+}
+
+
