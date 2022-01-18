@@ -10,6 +10,7 @@ use Luyiyuan\Toolkits\Tests\TestCase;
 use function Luyiyuan\Toolkits\Helpers\compare_float_value;
 use function Luyiyuan\Toolkits\Helpers\compare_grade;
 use function Luyiyuan\Toolkits\Helpers\double;
+use function Luyiyuan\Toolkits\Helpers\fail_if_file_not_exists;
 use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
 
 /**
@@ -17,6 +18,14 @@ use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
  */
 class FunctionsTest extends TestCase
 {
+    public string $file;
+
+    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    {
+        parent::__construct($name, $data, $dataName);
+        $this->file = __DIR__ . '/./../Data/exam_score_analysis_result.csv';
+    }
+
     /**
      * @return void
      */
@@ -93,5 +102,17 @@ class FunctionsTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value must be an integer or float.');
         double($c);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_fail_if_file_not_exists(): void
+    {
+        fail_if_file_not_exists($this->file);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The file {$this->file}_will_fail not exists.");
+        fail_if_file_not_exists($this->file . '_will_fail');
     }
 }
