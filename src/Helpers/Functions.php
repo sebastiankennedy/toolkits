@@ -6,6 +6,7 @@ namespace Luyiyuan\Toolkits\Helpers;
 
 use InvalidArgumentException;
 use RuntimeException;
+use Throwable;
 
 if (! function_exists('human_readable_file_size')) {
     /**
@@ -213,14 +214,14 @@ if (! function_exists('fail_if_not_dir')) {
     }
 }
 
-if (! function_exists('fail_if_file_get_no_contents')) {
+if (! function_exists('file_get_contents_or_fail')) {
     /**
      * 如果文件获取不到内容则抛出异常
      *
      * @param $file
      * @return string
      */
-    function fail_if_file_get_no_contents($file): string
+    function file_get_contents_or_fail($file): string
     {
         // 判断是否为本地文件
         if (filter_var($file, FILTER_VALIDATE_URL) === false) {
@@ -228,7 +229,12 @@ if (! function_exists('fail_if_file_get_no_contents')) {
             fail_if_file_not_readable($file);
         }
 
-        $data = file_get_contents($file);
+        try {
+            $data = file_get_contents($file);
+        } catch (Throwable $e) {
+            $data = false;
+        }
+
         if ($data === false) {
             throw new RuntimeException("failed to get contents from file $file");
         }

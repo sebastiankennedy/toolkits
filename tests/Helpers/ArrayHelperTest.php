@@ -8,4 +8,8 @@ use Luyiyuan\Toolkits\Tests\TestCase;
 
 class ArrayHelperTest extends TestCase
 {
+    public function test_something(): void
+    {
+        $this->markTestIncomplete();
+    }
 }

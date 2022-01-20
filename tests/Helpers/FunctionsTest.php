@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Luyiyuan\Toolkits\Tests\Helpers;
 
+use Exception;
 use InvalidArgumentException;
 use Luyiyuan\Toolkits\Tests\TestCase;
+
+use RuntimeException;
 
 use function Luyiyuan\Toolkits\Helpers\compare_float_value;
 use function Luyiyuan\Toolkits\Helpers\compare_grade;
 use function Luyiyuan\Toolkits\Helpers\double;
+use function Luyiyuan\Toolkits\Helpers\fail_if_file_get_no_contents;
 use function Luyiyuan\Toolkits\Helpers\fail_if_file_not_exists;
+use function Luyiyuan\Toolkits\Helpers\fail_if_file_not_readable;
+use function Luyiyuan\Toolkits\Helpers\fail_if_not_dir;
+use function Luyiyuan\Toolkits\Helpers\fail_if_not_file;
+use function Luyiyuan\Toolkits\Helpers\file_get_contents_or_fail;
 use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
 
 /**
@@ -111,8 +119,69 @@ class FunctionsTest extends TestCase
     {
         fail_if_file_not_exists($this->file);
 
+        $this->file .= '_will_fail';
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The file {$this->file}_will_fail not exists.");
-        fail_if_file_not_exists($this->file . '_will_fail');
+        $this->expectExceptionMessage("The file {$this->file} not exists.");
+        fail_if_file_not_exists($this->file);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_fail_if_file_not_readable(): void
+    {
+        chmod($this->file, 0755);
+        fail_if_file_not_readable($this->file);
+
+        $unreadableFile = __DIR__ . '/./../Data/unreadable_file.md';
+        chmod($unreadableFile, 0111);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The file {$unreadableFile} is not readable.");
+        fail_if_file_not_readable($unreadableFile);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_fail_if_not_file(): void
+    {
+        fail_if_not_file($this->file);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The file " . __DIR__ . " is not a file.");
+        fail_if_not_file(__DIR__);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_fail_if_not_dir(): void
+    {
+        fail_if_not_dir(__DIR__);
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The file {$this->file} is not a dir.");
+        fail_if_not_dir($this->file);
+    }
+
+    public function test_file_get_contents_or_fail(): void
+    {
+        $data = file_get_contents_or_fail($this->file);
+        self::assertIsString($data);
+
+        $data = file_get_contents_or_fail('http://www.baidu.com');
+        self::assertIsString($data);
+
+        $unreadableUrl = 'http://www.baidu.com/hello-world';
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage("failed to get contents from file $unreadableUrl");
+        file_get_contents_or_fail($unreadableUrl);
+
+
+        $unreadableFile = __DIR__ . '/./../Data/unreadable_file.md';
+        chmod($unreadableFile, 0111);
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The file {$unreadableFile} is not readable.");
+        file_get_contents_or_fail($unreadableFile);
     }
 }
