@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Luyiyuan\Toolkits\Tests\Helpers;
 
-use Exception;
 use InvalidArgumentException;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
@@ -13,7 +12,6 @@ use RuntimeException;
 use function Luyiyuan\Toolkits\Helpers\compare_float_value;
 use function Luyiyuan\Toolkits\Helpers\compare_grade;
 use function Luyiyuan\Toolkits\Helpers\double;
-use function Luyiyuan\Toolkits\Helpers\fail_if_file_get_no_contents;
 use function Luyiyuan\Toolkits\Helpers\fail_if_file_not_exists;
 use function Luyiyuan\Toolkits\Helpers\fail_if_file_not_readable;
 use function Luyiyuan\Toolkits\Helpers\fail_if_not_dir;
@@ -171,12 +169,10 @@ class FunctionsTest extends TestCase
 
         $data = file_get_contents_or_fail('http://www.baidu.com');
         self::assertIsString($data);
-
         $unreadableUrl = 'http://www.baidu.com/hello-world';
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage("failed to get contents from file $unreadableUrl");
         file_get_contents_or_fail($unreadableUrl);
-
 
         $unreadableFile = __DIR__ . '/./../Data/unreadable_file.md';
         chmod($unreadableFile, 0111);
