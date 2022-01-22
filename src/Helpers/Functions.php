@@ -243,4 +243,26 @@ if (! function_exists('file_get_contents_or_fail')) {
     }
 }
 
+if (! function_exists('file_open_or_fail')) {
+    /**
+     * 如果文件打开失败则抛出异常
+     *
+     * @param  string  $file
+     * @param  string  $mode
+     * @return resource
+     */
+    function file_open_or_fail(string $file, string $mode)
+    {
+        fail_if_file_not_exists($file);
+        fail_if_file_not_readable($file);
+
+        $fp = fopen($file, $mode);
+        if ($fp === false) {
+            throw new RuntimeException("failed to open file $file.");
+        }
+
+        return $fp;
+    }
+}
+
 
