@@ -17,6 +17,7 @@ use function Luyiyuan\Toolkits\Helpers\fail_if_file_not_readable;
 use function Luyiyuan\Toolkits\Helpers\fail_if_not_dir;
 use function Luyiyuan\Toolkits\Helpers\fail_if_not_file;
 use function Luyiyuan\Toolkits\Helpers\file_get_contents_or_fail;
+use function Luyiyuan\Toolkits\Helpers\file_open_or_fail;
 use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
 
 /**
@@ -26,10 +27,13 @@ class FunctionsTest extends TestCase
 {
     public string $file;
 
+    public string $unreadableFile;
+
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->file = __DIR__ . '/./../Data/exam_score_analysis_result.csv';
+        $this->unreadableFile = __DIR__ . '/./../Data/unreadable_file.md';
     }
 
     /**
@@ -131,11 +135,10 @@ class FunctionsTest extends TestCase
         chmod($this->file, 0755);
         fail_if_file_not_readable($this->file);
 
-        $unreadableFile = __DIR__ . '/./../Data/unreadable_file.md';
-        chmod($unreadableFile, 0111);
+        chmod($this->unreadableFile, 0111);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The file {$unreadableFile} is not readable.");
-        fail_if_file_not_readable($unreadableFile);
+        $this->expectExceptionMessage("The file {$this->unreadableFile} is not readable.");
+        fail_if_file_not_readable($this->unreadableFile);
     }
 
     /**
@@ -162,22 +165,26 @@ class FunctionsTest extends TestCase
         fail_if_not_dir($this->file);
     }
 
+    /**
+     * @return void
+     */
     public function test_file_get_contents_or_fail(): void
     {
         $data = file_get_contents_or_fail($this->file);
         self::assertIsString($data);
 
-        $data = file_get_contents_or_fail('http://www.baidu.com');
-        self::assertIsString($data);
-        $unreadableUrl = 'http://www.baidu.com/hello-world';
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage("failed to get contents from file $unreadableUrl");
-        file_get_contents_or_fail($unreadableUrl);
-
-        $unreadableFile = __DIR__ . '/./../Data/unreadable_file.md';
-        chmod($unreadableFile, 0111);
+        chmod($this->unreadableFile, 0111);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The file {$unreadableFile} is not readable.");
-        file_get_contents_or_fail($unreadableFile);
+        $this->expectExceptionMessage("The file {$this->unreadableFile} is not readable.");
+        file_get_contents_or_fail($this->unreadableFile);
+    }
+
+    public function test_file_open_or_fail(): void
+    {
+        file_open_or_fail($this->file, 'r');
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage("The file {$this->unreadableFile} is not readable.");
+        file_open_or_fail($this->unreadableFile, 'r');
     }
 }
