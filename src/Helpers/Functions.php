@@ -265,4 +265,66 @@ if (! function_exists('file_open_or_fail')) {
     }
 }
 
+if (! function_exists('csv_to_array')) {
+    /**
+     * @param  string  $file
+     * @param  bool  $parseHeader
+     * @param  int  $length
+     * @param  string  $delimiter
+     * @return array
+     * @example
+     * Luis,100,100
+     * Sebastian,90,90
+     * [
+     *     [
+     *       0 => 'Luis',
+     *       1 => 100,
+     *       2 => 100
+     *     ]
+     * ]
+     * @example
+     * 姓名,语文,数学
+     * Luis,100,100
+     * Sebastian,90,90
+     *
+     * [
+     *     [
+     *       "姓名" => 'Luis',
+     *       "语文" => 100,
+     *       "数学" => 100
+     *     ]
+     * ]
+     *
+     */
+    function csv_to_array(string $file, bool $parseHeader = true, int $length = 1000, string $delimiter = ','): array
+    {
+        fail_if_file_not_exists($file);
+        fail_if_file_not_readable($file);
 
+        $rows = [];
+        $handle = file_open_or_fail($file, 'r');
+
+        $row = fgetcsv($handle, $length, $delimiter);
+        if ($parseHeader) {
+            $header = $row;
+        } else {
+            $rows[] = $row;
+        }
+
+        try {
+            while (($row = fgetcsv($handle, $length, $delimiter)) !== false) {
+                if ($parseHeader) {
+                    $rows[] = array_combine($header, $row);
+                } else {
+                    $rows[] = $row;
+                }
+            }
+        } finally {
+            fclose($handle);
+        }
+
+        ! $parseHeader && array_shift($rows);
+
+        return $rows;
+    }
+}
