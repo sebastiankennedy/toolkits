@@ -7,10 +7,9 @@ namespace Luyiyuan\Toolkits\Tests\Helpers;
 use InvalidArgumentException;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
-use RuntimeException;
-
 use function Luyiyuan\Toolkits\Helpers\compare_float_value;
 use function Luyiyuan\Toolkits\Helpers\compare_grade;
+use function Luyiyuan\Toolkits\Helpers\csv_to_array;
 use function Luyiyuan\Toolkits\Helpers\double;
 use function Luyiyuan\Toolkits\Helpers\fail_if_file_not_exists;
 use function Luyiyuan\Toolkits\Helpers\fail_if_file_not_readable;
@@ -123,7 +122,7 @@ class FunctionsTest extends TestCase
 
         $this->file .= '_will_fail';
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The file {$this->file} not exists.");
+        $this->expectExceptionMessage("The file $this->file not exists.");
         fail_if_file_not_exists($this->file);
     }
 
@@ -137,7 +136,7 @@ class FunctionsTest extends TestCase
 
         chmod($this->unreadableFile, 0111);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The file {$this->unreadableFile} is not readable.");
+        $this->expectExceptionMessage("The file $this->unreadableFile is not readable.");
         fail_if_file_not_readable($this->unreadableFile);
     }
 
@@ -161,7 +160,7 @@ class FunctionsTest extends TestCase
         fail_if_not_dir(__DIR__);
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The file {$this->file} is not a dir.");
+        $this->expectExceptionMessage("The file $this->file is not a dir.");
         fail_if_not_dir($this->file);
     }
 
@@ -175,7 +174,7 @@ class FunctionsTest extends TestCase
 
         chmod($this->unreadableFile, 0111);
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The file {$this->unreadableFile} is not readable.");
+        $this->expectExceptionMessage("The file $this->unreadableFile is not readable.");
         file_get_contents_or_fail($this->unreadableFile);
     }
 
@@ -184,7 +183,22 @@ class FunctionsTest extends TestCase
         file_open_or_fail($this->file, 'r');
 
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage("The file {$this->unreadableFile} is not readable.");
+        $this->expectExceptionMessage("The file $this->unreadableFile is not readable.");
         file_open_or_fail($this->unreadableFile, 'r');
+    }
+
+    public function test_csv_to_array(): void
+    {
+        $arrayA = csv_to_array($this->file);
+        $arrayB = csv_to_array($this->file, false);
+        $this->assertSameSize($arrayA, $arrayB);
+
+        foreach ($arrayA as $key => $items) {
+            $i = 0;
+            foreach ($items as $value) {
+                $this->assertSame($value, $arrayB[$key][$i]);
+                $i++;
+            }
+        }
     }
 }
