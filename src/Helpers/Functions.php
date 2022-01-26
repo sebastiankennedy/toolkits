@@ -327,4 +327,22 @@ if (! function_exists('csv_to_array')) {
 
         return $rows;
     }
+
+    if (! function_exists('simply_csv_to_array')) {
+        /**
+         * @param  string  $file
+         * @return array
+         */
+        function simply_csv_to_array(string $file): array
+        {
+            $rows = array_map('str_getcsv', file($file));
+            $header = array_shift($rows);
+            $data = [];
+            foreach ($rows as $row) {
+                $data[] = array_combine($header, $row);
+            }
+
+            return $data;
+        }
+    }
 }
