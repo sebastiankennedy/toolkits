@@ -18,6 +18,7 @@ use function Luyiyuan\Toolkits\Helpers\fail_if_not_file;
 use function Luyiyuan\Toolkits\Helpers\file_get_contents_or_fail;
 use function Luyiyuan\Toolkits\Helpers\file_open_or_fail;
 use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
+use function Luyiyuan\Toolkits\Helpers\simply_csv_to_array;
 
 /**
  *
@@ -198,6 +199,19 @@ class FunctionsTest extends TestCase
             foreach ($items as $value) {
                 $this->assertSame($value, $arrayB[$key][$i]);
                 $i++;
+            }
+        }
+    }
+
+    public function test_simply_csv_to_array(): void
+    {
+        $arrayA = simply_csv_to_array($this->file);
+        $arrayB = csv_to_array($this->file);
+        $this->assertSameSize($arrayA, $arrayB);
+
+        foreach ($arrayA as $key => $items) {
+            foreach ($items as $field => $value) {
+                $this->assertSame($value, $arrayB[$key][$field]);
             }
         }
     }
