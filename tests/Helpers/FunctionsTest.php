@@ -179,6 +179,9 @@ class FunctionsTest extends TestCase
         file_get_contents_or_fail($this->unreadableFile);
     }
 
+    /**
+     * @return void
+     */
     public function test_file_open_or_fail(): void
     {
         file_open_or_fail($this->file, 'r');
@@ -188,6 +191,9 @@ class FunctionsTest extends TestCase
         file_open_or_fail($this->unreadableFile, 'r');
     }
 
+    /**
+     * @return void
+     */
     public function test_csv_to_array(): void
     {
         $arrayA = csv_to_array($this->file);
@@ -203,6 +209,9 @@ class FunctionsTest extends TestCase
         }
     }
 
+    /**
+     * @return void
+     */
     public function test_simply_csv_to_array(): void
     {
         $arrayA = simply_csv_to_array($this->file);
@@ -213,6 +222,25 @@ class FunctionsTest extends TestCase
             foreach ($items as $field => $value) {
                 $this->assertSame($value, $arrayB[$key][$field]);
             }
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function test_rank(): void
+    {
+        $data = simply_csv_to_array($this->file);
+        $temp = [];
+        foreach ($data as $value) {
+            $temp[] = [
+                'subject_name' => $value['考试科目名称'],
+                'student_name' => $value['姓名'],
+                'score' => $value['原始分数'],
+                'rank' => null,
+                'rank_base' => null,
+                'rank_percent' => null,
+            ];
         }
     }
 }
