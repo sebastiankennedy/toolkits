@@ -346,3 +346,50 @@ if (! function_exists('simply_csv_to_array')) {
         return $data;
     }
 }
+
+if (! function_exists('rank')) {
+    /**
+     * @param  array  $rows
+     * @param  string  $compareField
+     * @param  int  $precision
+     * @param  string  $rankField
+     * @param  string  $rankBaseField
+     * @return array
+     *
+     * @link https://www.php.net/manual/zh/array.sorting.php
+     */
+    function rank(
+        array $rows,
+        string $compareField = 'score',
+        string $rankField = 'rank',
+        string $rankBaseField = 'rank_base',
+        int $precision = 2
+    ): array {
+        uasort($rows, fn ($a, $b): int => bccomp(
+            is_array($b) ? $b[$compareField] : $b->$compareField,
+            is_array($a) ? $a[$compareField] : $a->$compareField,
+            $precision
+        ));
+
+        $rankBase = count($rows);
+        $prevScore = (string)PHP_INT_MIN;
+        $rank = null;
+        $no = 1;
+
+        foreach ($rows as &$row) {
+            $currentScore = is_array($row) ? $row[$compareField] : $row->$compareField;
+            if (bccomp($prevScore, $currentScore, $precision) !== 0) {
+                $rank = $no;
+                $prevScore = $currentScore;
+            }
+
+            is_array($row) ? $row[$rankField] = $rank : $row->$rankField = $rank;
+            is_array($row) ? $row[$rankBaseField] = $rankBase : $row->$rankBaseField = $rankBase;
+
+            $no++;
+        }
+
+
+        return $rows;
+    }
+}

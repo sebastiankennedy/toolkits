@@ -18,6 +18,7 @@ use function Luyiyuan\Toolkits\Helpers\fail_if_not_file;
 use function Luyiyuan\Toolkits\Helpers\file_get_contents_or_fail;
 use function Luyiyuan\Toolkits\Helpers\file_open_or_fail;
 use function Luyiyuan\Toolkits\Helpers\human_readable_file_size;
+use function Luyiyuan\Toolkits\Helpers\rank;
 use function Luyiyuan\Toolkits\Helpers\simply_csv_to_array;
 
 /**
@@ -233,7 +234,7 @@ class FunctionsTest extends TestCase
         $data = simply_csv_to_array($this->file);
         $temp = [];
         foreach ($data as $value) {
-            $temp[] = [
+            $temp[$value['考试科目名称']][] = [
                 'subject_name' => $value['考试科目名称'],
                 'student_name' => $value['姓名'],
                 'score' => $value['原始分数'],
@@ -241,6 +242,11 @@ class FunctionsTest extends TestCase
                 'rank_base' => null,
                 'rank_percent' => null,
             ];
+        }
+        dump($temp['总分']);
+
+        foreach ($temp as $key => $scores) {
+            $temp[$key] = rank($scores, 'score', 2);
         }
     }
 }
