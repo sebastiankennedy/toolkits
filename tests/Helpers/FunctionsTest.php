@@ -243,10 +243,11 @@ class FunctionsTest extends TestCase
                 'rank_percent' => null,
             ];
         }
-        dump($temp['总分']);
 
         foreach ($temp as $key => $scores) {
-            $temp[$key] = rank($scores, 'score', 2);
+            $temp[$key] = rank($scores);
         }
+        $this->assertEquals(36, $temp['语文'][0]['rank']);
+        $this->assertEquals(36, $temp['总分'][35]['rank']);
     }
 }
