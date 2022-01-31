@@ -6,7 +6,7 @@ namespace Luyiyuan\Toolkits\Tests\NetworkProtocol\Http;
 
 use Luyiyuan\Toolkits\Tests\TestCase;
 
-class HttpStatusCodeTest extends TestCase
+class HttpHeaderTest extends TestCase
 {
     public function test_something(): void
     {

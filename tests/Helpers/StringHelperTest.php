@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luyiyuan\Toolkits\Tests\NetworkProtocol\Http;
+namespace Luyiyuan\Toolkits\Tests\Helpers;
 
 use Luyiyuan\Toolkits\Tests\TestCase;
 
-class HttpStatusCodeTest extends TestCase
+class StringHelperTest extends TestCase
 {
     public function test_something(): void
     {

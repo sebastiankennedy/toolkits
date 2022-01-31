@@ -17,7 +17,7 @@ final class HttpStatusCode
     public const OK = 200;
     public const CREATED = 201;
     public const ACCEPTED = 202;
-    public const NONAUTHORITATIVE_INFORMATION = 203;
+    public const NON_AUTHORITATIVE_INFORMATION = 203;
     public const NO_CONTENT = 204;
     public const RESET_CONTENT = 205;
     public const PARTIAL_CONTENT = 206;
@@ -41,7 +41,7 @@ final class HttpStatusCode
     public const LENGTH_REQUIRED = 411;
     public const PRECONDITION_FAILED = 412;
     public const REQUEST_ENTITY_TOO_LARGE = 413;
-    public const REQUESTURI_TOO_LARGE = 414;
+    public const REQUEST_URI_TOO_LARGE = 414;
     public const UNSUPPORTED_MEDIA_TYPE = 415;
     public const REQUESTED_RANGE_NOT_SATISFIABLE = 416;
     public const EXPECTATION_FAILED = 417;
@@ -65,7 +65,7 @@ final class HttpStatusCode
         self::OK => 'OK',
         self::CREATED => 'Created',
         self::ACCEPTED => 'Accepted',
-        self::NONAUTHORITATIVE_INFORMATION => 'Non-Authoritative Information',
+        self::NON_AUTHORITATIVE_INFORMATION => 'Non-Authoritative Information',
         self::NO_CONTENT => 'No Content',
         self::RESET_CONTENT => 'Reset Content',
         self::PARTIAL_CONTENT => 'Partial Content',
@@ -89,7 +89,7 @@ final class HttpStatusCode
         self::LENGTH_REQUIRED => 'Length Required',
         self::PRECONDITION_FAILED => 'Precondition Failed',
         self::REQUEST_ENTITY_TOO_LARGE => 'Request Entity Too Large',
-        self::REQUESTURI_TOO_LARGE => 'Requesturi Too Large',
+        self::REQUEST_URI_TOO_LARGE => 'Request Uri Too Large',
         self::UNSUPPORTED_MEDIA_TYPE => 'Unsupported Media Type',
         self::REQUESTED_RANGE_NOT_SATISFIABLE => 'Requested Range Not Satisfiable',
         self::EXPECTATION_FAILED => 'Expectation Failed',
