@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luyiyuan\Toolkits\Functions;
 
+use InvalidArgumentException;
+
 if (! function_exists('compare_grade')) {
     /**
      * @param  string|null  $a
@@ -86,5 +88,158 @@ if (! function_exists('rank')) {
 
 
         return $rows;
+    }
+}
+
+if (! function_exists('array_index_by')) {
+    /**
+     * 自定义索引数组
+     *
+     * @param  array  $items
+     * @param  array|string|int|callable  $key
+     * @return array
+     */
+    function array_index_by(array $items, $key): array
+    {
+        if (is_string($key) || is_int($key)) {
+            return array_column($items, null, $key);
+        }
+
+        $data = [];
+        foreach ($items as $index => $item) {
+            if (is_array($key)) {
+                $valueOfKey = value_of_key($item, $key);
+            } elseif (is_callable($key)) {
+                $valueOfKey = $key($item, $index);
+            } else {
+                throw new InvalidArgumentException('unsupported key type.');
+            }
+            $data[$valueOfKey] = $item;
+        }
+
+        return $data;
+    }
+}
+
+if (! function_exists('value_of_key')) {
+    /**
+     * 灵活获取键的值
+     *
+     * @param  array|object  $item
+     * @param  array|int|string  $key
+     * @return mixed
+     */
+    function value_of_key($item, $key)
+    {
+        if (is_object($item)) {
+            return $item->$key;
+        }
+
+        if (is_array($key)) {
+            if (sizeof($key) === 1) {
+                return $item[$key[0]];
+            }
+
+            $current = array_shift($key);
+
+            return value_of_key($item[$current], $key);
+        }
+
+        return $item[$key];
+    }
+}
+
+if (! function_exists('array_order_by')) {
+    /**
+     * 多字段排序
+     *
+     * @return mixed|null
+     * @example
+     * $data[] = array('volume' => 67, 'edition' => 2);
+     * $data[] = array('volume' => 86, 'edition' => 1);
+     * $data[] = array('volume' => 85, 'edition' => 6);
+     * $data[] = array('volume' => 98, 'edition' => 2);
+     * $data[] = array('volume' => 86, 'edition' => 6);
+     * $data[] = array('volume' => 67, 'edition' => 7);
+     *
+     * $sorted = array_order_by($data, 'volume', SORT_DESC, 'edition', SORT_ASC);
+     *
+     */
+    function array_order_by()
+    {
+        $args = func_get_args();
+        $data = array_shift($args);
+        foreach ($args as $n => $field) {
+            if (is_string($field)) {
+                $tmp = array();
+                foreach ($data as $key => $row) {
+                    $tmp[$key] = $row[$field];
+                }
+                $args[$n] = $tmp;
+            }
+        }
+        $args[] = &$data;
+        call_user_func_array('array_multisort', $args);
+
+        return array_pop($args);
+    }
+}
+
+if (! function_exists('is_subset_of_set')) {
+    /**
+     * 是否为子集
+     *
+     * @param  array  $subset
+     * @param  array  $set
+     * @return bool
+     */
+    function is_subset_of_set(array $subset, array $set): bool
+    {
+        return empty(array_diff($subset, $set));
+    }
+}
+
+if (! function_exists('is_intersection_of_set')) {
+    /**
+     * 是否为交集
+     *
+     * @param  array  $intersection
+     * @param  array  $set
+     * @return bool
+     */
+    function is_intersection_of_set(array $intersection, array $set): bool
+    {
+        return ! empty(array_intersect($intersection, $set));
+    }
+}
+
+if (! function_exists('is_difference_of_set')) {
+    /**
+     * 是否为差集
+     *
+     * @param  array  $difference
+     * @param  array  $set
+     * @return bool
+     */
+    function is_difference_of_set(array $difference, array $set): bool
+    {
+        return ! empty(array_diff($difference, $set));
+    }
+}
+
+if (! function_exists('swap')) {
+    /**
+     * 交换数组元素
+     *
+     * @param  array  $data
+     * @param $i
+     * @param $j
+     * @return void
+     */
+    function swap(array &$data, $i, $j): void
+    {
+        $tmp = $data[$i];
+        $data[$i] = $data[$j];
+        $data[$j] = $tmp;
     }
 }
