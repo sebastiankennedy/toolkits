@@ -17,7 +17,7 @@ class ArrayTest extends TestCase
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->file = __DIR__ . '/./../Data/exam_score_analysis_result.csv';
+        $this->file = __DIR__ . '/./../Data/exam_scores.csv';
     }
 
     /**
