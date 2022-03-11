@@ -8,5 +8,4 @@ use Illuminate\Support\Arr;
 
 class ArrayHelper extends Arr
 {
-
 }
