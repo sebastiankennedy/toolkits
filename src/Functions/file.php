@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use RuntimeException;
 use Throwable;
 
-if (! function_exists('human_readable_file_size')) {
+if (! function_exists('human_readable_filesize')) {
     /**
      * 显示符合人类阅读习惯的文件大小
      *
@@ -16,7 +16,7 @@ if (! function_exists('human_readable_file_size')) {
      * @param  int  $decimals
      * @return string
      */
-    function human_readable_file_size(int $bytes, int $decimals = 2): string
+    function human_readable_filesize(int $bytes, int $decimals = 2): string
     {
         if ($bytes < 1024) {
             return $bytes . ' B';
@@ -122,7 +122,7 @@ if (! function_exists('file_get_contents_or_fail')) {
         }
 
         if ($data === false) {
-            throw new RuntimeException("failed to get contents from file $file");
+            throw new RuntimeException("failed to get contents from file $file.");
         }
 
         return $data;
@@ -163,9 +163,14 @@ if (! function_exists('csv_to_array')) {
      * Sebastian,90,90
      * [
      *     [
-     *       0 => 'Luis',
-     *       1 => 100,
-     *       2 => 100
+     *         0 => 'Luis',
+     *         1 => 100,
+     *         2 => 100
+     *     ],
+     *     [
+     *         0 => 'Sebastian',
+     *         1 => 90,
+     *         2 => 90
      *     ]
      * ]
      * @example
@@ -175,9 +180,14 @@ if (! function_exists('csv_to_array')) {
      *
      * [
      *     [
-     *       "姓名" => 'Luis',
-     *       "语文" => 100,
-     *       "数学" => 100
+     *         0 => 'Luis',
+     *         1 => 100,
+     *         2 => 100
+     *     ],
+     *     [
+     *         0 => 'Sebastian',
+     *         1 => 90,
+     *         2 => 90
      *     ]
      * ]
      *
@@ -232,4 +242,3 @@ if (! function_exists('simply_csv_to_array')) {
         return $data;
     }
 }
-
