@@ -8,7 +8,7 @@ use InvalidArgumentException;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
 use function Luyiyuan\Toolkits\Functions\csv_to_array;
-use function Luyiyuan\Toolkits\Functions\human_readable_file_size;
+use function Luyiyuan\Toolkits\Functions\human_readable_filesize;
 use function Luyiyuan\Toolkits\Functions\simply_csv_to_array;
 use function Luyiyuan\Toolkits\Functions\fail_if_file_not_exists;
 use function Luyiyuan\Toolkits\Functions\fail_if_file_not_readable;
@@ -26,16 +26,16 @@ class FileTest extends TestCase
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->file = __DIR__ . '/./../Data/exam_score_analysis_result.csv';
-        $this->unreadableFile = __DIR__ . '/./../Data/unreadable_file.md';
+        $this->file = __DIR__ . '/./../Data/exam_scores.csv';
+        $this->unreadableFile = __DIR__ . '/./../Data/unreadable_file.csv';
     }
 
     /**
      * @return void
      */
-    public function test_human_readable_file_size(): void
+    public function test_human_readable_filesize(): void
     {
-        $mapping = [
+        $map = [
             1022 => '1022 B',
             1023 => '1023 B',
             1024 => '1.00 KB',
@@ -48,14 +48,14 @@ class FileTest extends TestCase
             1031 => '1.01 KB',
         ];
         for ($bytes = 1022; $bytes < 1032; $bytes++) {
-            $this->assertEquals($mapping[$bytes], human_readable_file_size($bytes));
+            $this->assertEquals($map[$bytes], human_readable_filesize($bytes));
         }
 
         $bytes = 1032;
-        $this->assertEquals("1.008 KB", human_readable_file_size($bytes, 3));
+        $this->assertEquals("1.008 KB", human_readable_filesize($bytes, 3));
 
         $bytes = 1024 * 1024 * 1024 + 5;
-        $this->assertEquals("1.0000 GB", human_readable_file_size($bytes, 4));
+        $this->assertEquals("1.0000 GB", human_readable_filesize($bytes, 4));
     }
 
     /**
@@ -79,7 +79,6 @@ class FileTest extends TestCase
         chmod($this->file, 0755);
         fail_if_file_not_readable($this->file);
 
-        chmod($this->unreadableFile, 0111);
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage("The file $this->unreadableFile is not readable.");
         fail_if_file_not_readable($this->unreadableFile);
