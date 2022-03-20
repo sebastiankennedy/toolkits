@@ -17,7 +17,8 @@
     "require-dev": {
         "phpunit/phpunit": "^9.2",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "symfony/var-dumper": "^5.4"
+        "symfony/var-dumper": "^5.4",
+        "phpstan/phpstan": "^1.6"
     },
     "autoload": {
         "psr-4": {
@@ -34,5 +35,11 @@
         "psr-4": {
             "Luyiyuan\\Toolkits\\Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "lint": [
+            "scripts/php-cs-fixer",
+            "scripts/phpstan"
+        ]
     }
 }
