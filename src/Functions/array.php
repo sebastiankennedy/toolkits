@@ -45,7 +45,7 @@ if (! function_exists('compare_grade')) {
 
 if (! function_exists('rank')) {
     /**
-     * @param  array  $rows
+     * @param  array $rows
      * @param  string  $compareField
      * @param  int  $precision
      * @param  string  $rankField
@@ -227,16 +227,16 @@ if (! function_exists('is_difference_of_set')) {
     }
 }
 
-if (! function_exists('swap')) {
+if (! function_exists('array_swap')) {
     /**
      * 交换数组元素
      *
      * @param  array  $data
-     * @param $i
-     * @param $j
+     * @param  int|string  $i
+     * @param  int|string  $j
      * @return void
      */
-    function swap(array &$data, $i, $j): void
+    function array_swap(array &$data, $i, $j): void
     {
         $tmp = $data[$i];
         $data[$i] = $data[$j];
