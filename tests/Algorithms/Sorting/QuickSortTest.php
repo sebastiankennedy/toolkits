@@ -11,31 +11,21 @@ use function Luyiyuan\Toolkits\Functions\csv_to_array;
 
 class QuickSortTest extends TestCase
 {
-    public array $array;
-
-    public array $multiArray;
-
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
-    {
-        parent::__construct($name, $data, $dataName);
-        $this->array = range(1, 20);
-        shuffle($this->array);
-    }
-
     public function test_sort(): void
     {
-        QuickSort::sort($this->array);
-        $this->assertSame(array_values($this->array), range(1, 20));
-        echo PHP_EOL . implode(',', $this->array) . PHP_EOL;
+        $array = range(1, 20);
+        shuffle($array);
+        QuickSort::sort($array);
+        $this->assertSame(array_values($array), range(1, 20));
+        echo PHP_EOL . implode(',', $array) . PHP_EOL;
     }
 
     public function test_sort_by(): void
     {
-        $this->multiArray = csv_to_array(__DIR__ . '/./../../Data/exam_scores.csv');
-        shuffle($this->multiArray);
-
         $temp = [];
-        foreach ($this->multiArray as $value) {
+        $multiArray = csv_to_array(__DIR__ . '/./../../Data/scores.csv');
+
+        foreach ($multiArray as $value) {
             $temp[$value['考试科目名称']][] = [
                 'subject_name' => $value['考试科目名称'],
                 'student_name' => $value['姓名'],

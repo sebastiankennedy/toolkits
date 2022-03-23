@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Luyiyuan\Toolkits\Algorithms\Sorting;
 
-use function Luyiyuan\Toolkits\Functions\swap;
+use Luyiyuan\Toolkits\Helpers\ArrayHelper;
 
 /**
  * 快速排序
@@ -14,49 +14,49 @@ class QuickSort
     /**
      * @link - 需要优化：https://blog.csdn.net/baidu_30000217/article/details/53312990
      *
-     * @param  array  $array
+     * @param  array<array>  $data
      * @param  int|null  $left
      * @param  int|null  $right
      * @return void
      */
-    public static function sort(array &$array, ?int $left = null, ?int $right = null): void
+    public static function sort(array &$data, ?int $left = null, ?int $right = null): void
     {
         $left = null === $left ? 0 : $left;
-        $right = null === $right ? count($array) - 1 : $right;
+        $right = null === $right ? count($data) - 1 : $right;
         if ($left > $right) {
             return;
         }
 
         $i = $left;
         $j = $right;
-        $pivot = $array[$left];
+        $pivot = $data[$left];
         while ($i !== $j) {
             // 先从右往左找比基准数小的
-            while ($i < $j && $array[$j] >= $pivot) {
+            while ($i < $j && $data[$j] >= $pivot) {
                 $j--;
             }
 
             // 再从左往右找比基准数大的
-            while ($i < $j && $array[$i] <= $pivot) {
+            while ($i < $j && $data[$i] <= $pivot) {
                 $i++;
             }
 
             // i 和 j 未相遇时
             if ($i < $j) {
                 // 交换两个元素在数组中的位置
-                swap($array, $i, $j);
+                ArrayHelper::swap($data, $i, $j);
             }
         }
         // 将基准数归位
-        swap($array, $left, $i);
+        ArrayHelper::swap($data, $left, $i);
 
-        self::sort($array, $left, $i - 1);
-        self::sort($array, $i + 1, $right);
+        self::sort($data, $left, $i - 1);
+        self::sort($data, $i + 1, $right);
     }
 
     /**
-     * @param  array  $data
      * @param  string  $field
+     * @param  array[]  $data
      * @param  int|null  $left
      * @param  int|null  $right
      * @return void
@@ -82,10 +82,10 @@ class QuickSort
             }
 
             if ($i < $j) {
-                swap($data, $i, $j);
+                ArrayHelper::swap($data, $i, $j);
             }
         }
-        swap($data, $left, $i);
+        ArrayHelper::swap($data, $left, $i);
 
         self::sortBy($field, $data, $left, $i - 1);
         self::sortBy($field, $data, $i + 1, $right);
