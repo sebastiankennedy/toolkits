@@ -26,7 +26,7 @@ class FileTest extends TestCase
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->file = __DIR__ . '/./../Data/exam_scores.csv';
+        $this->file = __DIR__ . '/./../Data/scores.csv';
         $this->unreadableFile = __DIR__ . '/./../Data/unreadable_file.csv';
     }
 
