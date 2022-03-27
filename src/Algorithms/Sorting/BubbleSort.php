@@ -35,4 +35,28 @@ class BubbleSort
             }
         }
     }
+
+    /**
+     * @param  string  $filed
+     * @param  array<array>  $array
+     * @param  string  $order
+     * @return void
+     */
+    public static function sortBy(string $filed, array &$array, string $order = 'asc'): void
+    {
+        $n = count($array);
+        for ($i = 0; $i < $n - 1; $i++) {
+            for ($j = 0; $j < $n - 1 - $i; $j++) {
+                if ($order === 'asc') {
+                    if ($array[$j][$filed] > $array[$j + 1][$filed]) {
+                        ArrayHelper::swap($array, $j, $j + 1);
+                    }
+                } else {
+                    if ($array[$j][$filed] < $array[$j + 1][$filed]) {
+                        ArrayHelper::swap($array, $j, $j + 1);
+                    }
+                }
+            }
+        }
+    }
 }
