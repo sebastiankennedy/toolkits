@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace Luyiyuan\Toolkits\Algorithms\DynamicProgramming;
 
+/**
+ * 斐波那契数列
+ *
+ * @link https://leetcode.cn/problems/fibonacci-number/
+ * @link https://leetcode.cn/problems/fei-bo-na-qi-shu-lie-lcof/
+ *
+ */
 class Fibonacci
 {
     /**
@@ -95,9 +102,9 @@ class Fibonacci
 
         $prev = $curr = 1;
         for ($i = 3; $i <= $n; $i++) {
-            $sum = $prev + $curr;
+            $temp = $prev + $curr;
             $prev = $curr;
-            $curr = $sum;
+            $curr = $temp;
         }
 
         return $curr;
