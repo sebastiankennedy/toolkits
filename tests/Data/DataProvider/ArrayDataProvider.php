@@ -75,4 +75,34 @@ trait ArrayDataProvider
             ],
         ];
     }
+
+    public function value_of_key_case(): array
+    {
+        $object = new \stdClass();
+        $object->name = 'sebastian';
+
+        return [
+            'get object key value' => [
+                'item' => $object,
+                'key' => 'name',
+                'expected' => 'sebastian',
+            ],
+            'get string key value' => [
+                'item' => ['name' => 'sebastian'],
+                'key' => 'name',
+                'expected' => 'sebastian',
+            ],
+            'get array key value' => [
+                'item' => ['name' => 'sebastian'],
+                'key' => ['name'],
+                'expected' => 'sebastian',
+            ],
+            'another get array key value' => [
+                'item' => ['name' => ['sex' => 'male'],],
+                'key' => ['name', 'sex'],
+                'expected' => 'male',
+            ],
+        ];
+    }
+
 }
