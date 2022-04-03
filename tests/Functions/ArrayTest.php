@@ -4,20 +4,25 @@ declare(strict_types=1);
 
 namespace Luyiyuan\Toolkits\Tests\Functions;
 
+use Luyiyuan\Toolkits\Tests\Data\DataProvider\ArrayDataProvider;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
+use function Luyiyuan\Toolkits\Functions\array_index;
 use function Luyiyuan\Toolkits\Functions\compare_grade;
 use function Luyiyuan\Toolkits\Functions\rank;
 use function Luyiyuan\Toolkits\Functions\simply_csv_to_array;
+use function Luyiyuan\Toolkits\Functions\value_of_key;
 
 class ArrayTest extends TestCase
 {
+    use ArrayDataProvider;
+
     public string $file;
 
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->file = __DIR__ . '/./../Data/scores.csv';
+        $this->file = __DIR__ . '/./../Data/Csv/scores.csv';
     }
 
     /**
@@ -63,5 +68,30 @@ class ArrayTest extends TestCase
         }
         $this->assertEquals(36, $temp['语文'][0]['rank']);
         $this->assertEquals(36, $temp['总分'][35]['rank']);
+    }
+
+
+    /**
+     * @dataProvider array_index_case
+     * @param  array  $data
+     * @param  array|string|int|callable  $key
+     * @param  array  $expected
+     * @return void
+     */
+    public function test_array_index(array $data, $key, array $expected): void
+    {
+        $this->assertEquals($expected, array_index($data, $key));
+    }
+
+    /**
+     * @dataProvider value_of_key_case
+     * @param $item
+     * @param $key
+     * @param $expected
+     * @return void
+     */
+    public function test_value_of_key($item, $key, $expected): void
+    {
+        $this->assertEquals($expected, value_of_key($item, $key));
     }
 }
