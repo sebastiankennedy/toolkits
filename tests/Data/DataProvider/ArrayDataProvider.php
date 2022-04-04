@@ -105,4 +105,49 @@ trait ArrayDataProvider
         ];
     }
 
+    public function test_array_order_by_case(): array
+    {
+        return [
+            'volume desc' => [
+                'data' => [
+                    ['volume' => 67, 'edition' => 2],
+                    ['volume' => 86, 'edition' => 1],
+                    ['volume' => 85, 'edition' => 6],
+                    ['volume' => 98, 'edition' => 2],
+                    ['volume' => 86, 'edition' => 6],
+                    ['volume' => 67, 'edition' => 7],
+                ],
+                'fieldA' => 'volume',
+                'order' => SORT_DESC,
+                'expected' => [
+                    ['volume' => 98, 'edition' => 2],
+                    ['volume' => 86, 'edition' => 1],
+                    ['volume' => 86, 'edition' => 6],
+                    ['volume' => 85, 'edition' => 6],
+                    ['volume' => 67, 'edition' => 2],
+                    ['volume' => 67, 'edition' => 7],
+                ],
+            ],
+            'edition asc' => [
+                'data' => [
+                    ['volume' => 67, 'edition' => 2],
+                    ['volume' => 86, 'edition' => 1],
+                    ['volume' => 85, 'edition' => 6],
+                    ['volume' => 98, 'edition' => 2],
+                    ['volume' => 86, 'edition' => 6],
+                    ['volume' => 67, 'edition' => 7],
+                ],
+                'fieldA' => 'edition',
+                'order' => SORT_ASC,
+                'expected' => [
+                    ['volume' => 86, 'edition' => 1],
+                    ['volume' => 67, 'edition' => 2],
+                    ['volume' => 98, 'edition' => 2],
+                    ['volume' => 85, 'edition' => 6],
+                    ['volume' => 86, 'edition' => 6],
+                    ['volume' => 67, 'edition' => 7],
+                ],
+            ],
+        ];
+    }
 }

@@ -8,6 +8,7 @@ use Luyiyuan\Toolkits\Tests\Data\DataProvider\ArrayDataProvider;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
 use function Luyiyuan\Toolkits\Functions\array_index;
+use function Luyiyuan\Toolkits\Functions\array_order_by;
 use function Luyiyuan\Toolkits\Functions\compare_grade;
 use function Luyiyuan\Toolkits\Functions\rank;
 use function Luyiyuan\Toolkits\Functions\simply_csv_to_array;
@@ -93,5 +94,18 @@ class ArrayTest extends TestCase
     public function test_value_of_key($item, $key, $expected): void
     {
         $this->assertEquals($expected, value_of_key($item, $key));
+    }
+
+    /**
+     * @dataProvider test_array_order_by_case
+     * @param $data
+     * @param $fieldA
+     * @param $order
+     * @param $expected
+     * @return void
+     */
+    public function test_array_order_by($data, $fieldA, $order, $expected): void
+    {
+        $this->assertEquals($expected, array_order_by($data, $fieldA, $order));
     }
 }
