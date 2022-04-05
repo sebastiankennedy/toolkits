@@ -91,7 +91,7 @@ if (! function_exists('rank')) {
     }
 }
 
-if (! function_exists('array_index')) {
+if (! function_exists('array_index_by')) {
     /**
      * 自定义索引数组
      *
@@ -99,7 +99,7 @@ if (! function_exists('array_index')) {
      * @param  array|string|int|callable  $key
      * @return array
      */
-    function array_index(array $items, $key): array
+    function array_index_by(array $items, $key): array
     {
         if (is_string($key) || is_int($key)) {
             return array_column($items, null, $key);

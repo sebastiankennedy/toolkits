@@ -7,7 +7,7 @@ namespace Luyiyuan\Toolkits\Tests\Functions;
 use Luyiyuan\Toolkits\Tests\Data\DataProvider\ArrayDataProvider;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
-use function Luyiyuan\Toolkits\Functions\array_index;
+use function Luyiyuan\Toolkits\Functions\array_index_by;
 use function Luyiyuan\Toolkits\Functions\array_order_by;
 use function Luyiyuan\Toolkits\Functions\compare_grade;
 use function Luyiyuan\Toolkits\Functions\rank;
@@ -73,15 +73,15 @@ class ArrayTest extends TestCase
 
 
     /**
-     * @dataProvider array_index_case
+     * @dataProvider array_index_by_case
      * @param  array  $data
      * @param  array|string|int|callable  $key
      * @param  array  $expected
      * @return void
      */
-    public function test_array_index(array $data, $key, array $expected): void
+    public function test_array_index_by(array $data, $key, array $expected): void
     {
-        $this->assertEquals($expected, array_index($data, $key));
+        $this->assertEquals($expected, array_index_by($data, $key));
     }
 
     /**

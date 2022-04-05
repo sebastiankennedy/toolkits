@@ -4,7 +4,7 @@ namespace Luyiyuan\Toolkits\Tests\Data\DataProvider;
 
 trait ArrayDataProvider
 {
-    public function array_index_case(): array
+    public function array_index_by_case(): array
     {
         return [
             'index by int' => [
