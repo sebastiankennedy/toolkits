@@ -10,6 +10,9 @@ use Luyiyuan\Toolkits\Tests\TestCase;
 use function Luyiyuan\Toolkits\Functions\array_index_by;
 use function Luyiyuan\Toolkits\Functions\array_order_by;
 use function Luyiyuan\Toolkits\Functions\compare_grade;
+use function Luyiyuan\Toolkits\Functions\is_difference_of_set;
+use function Luyiyuan\Toolkits\Functions\is_intersection_of_set;
+use function Luyiyuan\Toolkits\Functions\is_subset_of_set;
 use function Luyiyuan\Toolkits\Functions\rank;
 use function Luyiyuan\Toolkits\Functions\simply_csv_to_array;
 use function Luyiyuan\Toolkits\Functions\value_of_key;
@@ -107,5 +110,42 @@ class ArrayTest extends TestCase
     public function test_array_order_by($data, $fieldA, $order, $expected): void
     {
         $this->assertEquals($expected, array_order_by($data, $fieldA, $order));
+    }
+
+    /**
+     * @return void
+     */
+    public function test_is_intersection_of_set(): void
+    {
+        $a = ['a', 'b', 'c'];
+        $b = ['a', 'b', 'c', 'd', 'e', 'f'];
+        $c = ['d', 'e', 'f'];
+        $this->assertSame(true, is_intersection_of_set($a, $b));
+        $this->assertSame(true, is_intersection_of_set($b, $a));
+        $this->assertSame(false, is_intersection_of_set($a, $c));
+    }
+
+    /**
+     * @return void
+     */
+    public function test_is_subset_of_set(): void
+    {
+        $a = ['a', 'b', 'c'];
+        $b = ['a', 'b', 'c', 'd', 'e', 'f'];
+        $this->assertSame(true, is_subset_of_set($a, $b));
+        $this->assertSame(false, is_subset_of_set($b, $a));
+    }
+
+    /**
+     * @return void
+     */
+    public function test_is_difference_of_set(): void
+    {
+        $a = ['a', 'b', 'c'];
+        $b = ['a', 'b', 'c', 'd', 'e', 'f'];
+        $c = ['d', 'e', 'f'];
+        $this->assertSame(false, is_difference_of_set($a, $b));
+        $this->assertSame(true, is_difference_of_set($b, $a));
+        $this->assertSame(true, is_difference_of_set($a, $c));
     }
 }
