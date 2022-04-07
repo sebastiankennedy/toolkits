@@ -2,6 +2,8 @@
 
 namespace Luyiyuan\Toolkits\Tests\Data\DataProvider;
 
+use stdClass;
+
 trait ArrayDataProvider
 {
     public function array_index_by_case(): array
@@ -78,7 +80,7 @@ trait ArrayDataProvider
 
     public function value_of_key_case(): array
     {
-        $object = new \stdClass();
+        $object = new stdClass();
         $object->name = 'sebastian';
 
         return [
