@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Luyiyuan\Toolkits\Algorithms\DynamicProgramming;
 
 /**
- * 凑零钱
+ * 零钱兑换
  */
 class CoinChange
 {
