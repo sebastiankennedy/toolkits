@@ -24,7 +24,10 @@
             "Luyiyuan\\Toolkits\\": "src"
         },
         "files": [
-            "./src/Helpers/Functions.php"
+            "./src/Functions/array.php",
+            "./src/Functions/date.php",
+            "./src/Functions/file.php",
+            "./src/Functions/numeric.php"
         ]
     },
     "autoload-dev": {
