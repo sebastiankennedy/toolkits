@@ -12,6 +12,7 @@
         "php": "7.4.*",
         "ext-json": "*",
         "ext-bcmath": "*",
+        "ext-zip": "*",
         "laravel/helpers": "^1.4"
     },
     "require-dev": {
@@ -38,8 +39,8 @@
     },
     "scripts": {
         "lint": [
-            "scripts/php-cs-fixer",
-            "scripts/phpstan"
+            "./scripts/php-cs-fixer",
+            "./scripts/phpstan"
         ]
     }
 }
