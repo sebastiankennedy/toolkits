@@ -33,6 +33,7 @@ if (! function_exists('human_readable_filesize')) {
                 'PB',
                 'EB',
                 'ZB',
+                'YB',
             ][$factor];
     }
 }
