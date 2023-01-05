@@ -38,6 +38,36 @@ if (! function_exists('human_readable_filesize')) {
     }
 }
 
+if (! function_exists('convert_filesize_to_bytes')) {
+    /**
+     * 文件大小转成 Byte
+     *
+     * @param  string  $value
+     * @return int
+     */
+    function convert_filesize_to_bytes(string $value): int
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $value = trim(htmlspecialchars($value, ENT_QUOTES, 'UTF-8'));
+        $suffix = strtoupper(trim(substr($value, -2)));
+
+        if (intval($suffix) !== 0) {
+            $suffix = 'B';
+        }
+
+        if (! in_array($suffix, $units)) {
+            throw new InvalidArgumentException("invalid unit: $suffix.");
+        }
+
+        $number = trim(substr($value, 0, strlen($value) - strlen($suffix)));
+        if (! is_numeric($number)) {
+            throw new InvalidArgumentException("invalid filesize: $number.");
+        }
+
+        return (int)ceil(($number * pow(1024, array_flip($units)[$suffix])));
+    }
+}
+
 if (! function_exists('fail_if_file_not_exists')) {
     /**
      * 文件不存在则抛出异常
