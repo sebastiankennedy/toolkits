@@ -160,6 +160,41 @@ if (! function_exists('file_get_contents_or_fail')) {
     }
 }
 
+if (! function_exists('scan_dir_or_fail')) {
+    /**
+     * 列出指定路径中的文件和目录
+     *
+     * @param  string  $directory
+     * @param  bool  $excludeDotDirs
+     * @return array
+     */
+    function scan_dir_or_fail(string $directory, bool $excludeDotDirs = false): array
+    {
+        fail_if_file_not_exists($directory);
+        fail_if_not_dir($directory);
+
+        $scannedDirectory = scandir($directory);
+        if ($excludeDotDirs === false) {
+            $scannedDirectory = array_diff($scannedDirectory, ['.', '..']);
+        }
+
+        return $scannedDirectory;
+    }
+}
+
+if (! function_exists('join_paths')) {
+    /**
+     * 合并多个路径
+     *
+     * @param  string  ...$paths
+     * @return string
+     */
+    function join_paths(string ...$paths): string
+    {
+        return preg_replace('~[/\\\\]+~', DIRECTORY_SEPARATOR, implode(DIRECTORY_SEPARATOR, $paths));
+    }
+}
+
 if (! function_exists('file_open_or_fail')) {
     /**
      * 如果文件打开失败则抛出异常
