@@ -308,3 +308,15 @@ if (! function_exists('simply_csv_to_array')) {
         return $data;
     }
 }
+
+if (! function_exists('path_info')) {
+    function path_info(string $path): array
+    {
+        fail_if_file_not_exists($path);
+
+        $pathInfo = pathinfo($path);
+        $pathInfo['extension'] ??= '';
+
+        return $pathInfo;
+    }
+}
