@@ -320,3 +320,25 @@ if (! function_exists('path_info')) {
         return $pathInfo;
     }
 }
+
+if (! function_exists('make_temp')) {
+    function make_temp(string $type): string
+    {
+        $tempDir = sys_get_temp_dir();
+        do {
+            $name = join_paths($tempDir, uniqid());
+        } while (file_exists($name));
+
+        if ($type === 'file') {
+            if (! touch($name)) {
+                throw new RuntimeException("failed to touch file: $name");
+            }
+        } else {
+            if (! mkdir($name, 0777, true)) {
+                throw new RuntimeException("failed to create directory: $name");
+            }
+        }
+
+        return $name;
+    }
+}
