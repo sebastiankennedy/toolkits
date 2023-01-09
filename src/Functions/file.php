@@ -342,3 +342,10 @@ if (! function_exists('make_temp')) {
         return $name;
     }
 }
+
+if (! function_exists('make_temp_file')) {
+    function make_temp_file(): string
+    {
+        return make_temp('file');
+    }
+}
