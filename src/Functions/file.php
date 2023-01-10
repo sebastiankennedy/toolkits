@@ -7,6 +7,7 @@ namespace Luyiyuan\Toolkits\Functions;
 use InvalidArgumentException;
 use RuntimeException;
 use Throwable;
+use ZipArchive;
 
 if (! function_exists('human_readable_filesize')) {
     /**
@@ -347,5 +348,12 @@ if (! function_exists('make_temp_file')) {
     function make_temp_file(): string
     {
         return make_temp('file');
+    }
+}
+
+if (! function_exists('make_temp_dir')) {
+    function make_temp_dir(): string
+    {
+        return make_temp('dir');
     }
 }
