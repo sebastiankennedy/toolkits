@@ -357,3 +357,31 @@ if (! function_exists('make_temp_dir')) {
         return make_temp('dir');
     }
 }
+
+if (! function_exists('unzip')) {
+    function unzip(string $path, ?string $dst = null): string
+    {
+        $extension = path_info($path)['extension'];
+        if ($extension !== 'zip') {
+            throw new InvalidArgumentException("unsupported file extension: $extension.");
+        }
+
+        $zip = new ZipArchive();
+        $result = $zip->open($path);
+        if ($result !== true) {
+            throw new RuntimeException("failed to open zip file: $path, error: $result.");
+        }
+
+        if (is_null($dst)) {
+            $dst = make_temp_dir();
+        }
+
+        $result = $zip->extractTo($dst);
+        $zip->close();
+        if ($result !== true) {
+            throw new RuntimeException("failed to extract zip file: $path, error: $result.");
+        }
+
+        return $dst;
+    }
+}
