@@ -1,2 +1,2 @@
 #! /bin/bash
-vendor/bin/phpstan analyse --memory-limit=512M --level 8 src tests
+vendor/bin/phpstan analyse --memory-limit=1G --level 8 src tests $*
