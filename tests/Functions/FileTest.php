@@ -7,8 +7,12 @@ namespace Luyiyuan\Toolkits\Tests\Functions;
 use InvalidArgumentException;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
+use function Luyiyuan\Toolkits\Functions\convert_filesize_to_bytes;
 use function Luyiyuan\Toolkits\Functions\csv_to_array;
 use function Luyiyuan\Toolkits\Functions\human_readable_filesize;
+use function Luyiyuan\Toolkits\Functions\join_paths;
+use function Luyiyuan\Toolkits\Functions\path_info;
+use function Luyiyuan\Toolkits\Functions\scan_dir_or_fail;
 use function Luyiyuan\Toolkits\Functions\simply_csv_to_array;
 use function Luyiyuan\Toolkits\Functions\fail_if_file_not_exists;
 use function Luyiyuan\Toolkits\Functions\fail_if_file_not_readable;
@@ -17,13 +21,27 @@ use function Luyiyuan\Toolkits\Functions\fail_if_not_file;
 use function Luyiyuan\Toolkits\Functions\file_get_contents_or_fail;
 use function Luyiyuan\Toolkits\Functions\file_open_or_fail;
 
+/**
+ *
+ */
 class FileTest extends TestCase
 {
+    /**
+     * @var string
+     */
     public string $file;
 
+    /**
+     * @var string
+     */
     public string $unreadableFile;
 
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    /**
+     * @param  string|null  $name
+     * @param  array  $data
+     * @param  string  $dataName
+     */
+    public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->file = __DIR__ . '/./../Data/Csv/scores.csv';
@@ -56,6 +74,29 @@ class FileTest extends TestCase
 
         $bytes = 1024 * 1024 * 1024 + 5;
         $this->assertEquals("1.0000 GB", human_readable_filesize($bytes, 4));
+    }
+
+    public function test_convert_filesize_to_bytes(): void
+    {
+        $testCases = [
+            '13b' => 13,
+            '13B' => 13,
+            '13KB' => 13312,
+            '10.5KB' => 10752,
+            '5Gb' => 5368709120,
+            '533Mb' => 558891008,
+            '10.64GB' => 11424613008,
+        ];
+        foreach ($testCases as $key => $value) {
+            $this->assertEquals(convert_filesize_to_bytes($key), $value);
+        }
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('invalid filesize: 1as.11');
+        convert_filesize_to_bytes('1as.11GB');
+
+        $this->expectExceptionMessage('invalid filesize: CS');
+        convert_filesize_to_bytes('123 ABCS');
     }
 
     /**
