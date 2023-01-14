@@ -166,6 +166,30 @@ class FileTest extends TestCase
     /**
      * @return void
      */
+    public function test_scan_dir_or_fail(): void
+    {
+        $dir = __DIR__;
+        $scannedDirectory = scan_dir_or_fail($dir);
+        $this->assertSame(count($scannedDirectory), 4);
+
+        $scannedDirectory = scan_dir_or_fail($dir, true);
+        $this->assertSame(count($scannedDirectory), 6);
+    }
+
+    /**
+     * @return void
+     */
+    public function test_join_paths(): void
+    {
+        $dir = __DIR__;
+        $name = 'FileTest.php';
+        $path = join_paths($dir, $name);
+        $this->assertSame($path, __FILE__);
+    }
+
+    /**
+     * @return void
+     */
     public function test_file_open_or_fail(): void
     {
         file_open_or_fail($this->file, 'r');
