@@ -232,4 +232,26 @@ class FileTest extends TestCase
             }
         }
     }
+
+    public function test_path_info(): void
+    {
+        $pathInfo = path_info($this->file);
+        $this->assertSame(count($pathInfo), 4);
+
+        $envFile = __DIR__ . '/./../Data/Files/.env';
+        $pathInfo = path_info($envFile);
+        $this->assertSame($pathInfo['basename'], '.env');
+
+        $envFile = __DIR__ . '/./../Data/Files/.env.example';
+        $pathInfo = path_info($envFile);
+        $this->assertSame($pathInfo['filename'], '.env');
+
+        $dir = __DIR__ . '/./../Data/Csv';
+        $pathInfo = path_info($dir);
+        $this->assertSame(count($pathInfo), 4);
+
+        $chineseFile = __DIR__ . '/./../Data/Csv/中文2022.csv';
+        $pathInfo = path_info($chineseFile);
+        $this->assertSame($pathInfo['filename'], '中文2022');
+    }
 }
