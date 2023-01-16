@@ -53,7 +53,7 @@ class FileTest extends TestCase
      */
     public function test_human_readable_filesize(): void
     {
-        $map = [
+        $testCases = [
             1022 => '1022 B',
             1023 => '1023 B',
             1024 => '1.00 KB',
@@ -66,7 +66,7 @@ class FileTest extends TestCase
             1031 => '1.01 KB',
         ];
         for ($bytes = 1022; $bytes < 1032; $bytes++) {
-            $this->assertEquals($map[$bytes], human_readable_filesize($bytes));
+            $this->assertEquals($testCases[$bytes], human_readable_filesize($bytes));
         }
 
         $bytes = 1032;
