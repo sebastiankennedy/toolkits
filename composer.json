@@ -19,7 +19,8 @@
         "phpunit/phpunit": "^9.2",
         "friendsofphp/php-cs-fixer": "^3.0",
         "symfony/var-dumper": "^5.4",
-        "phpstan/phpstan": "^1.6"
+        "phpstan/phpstan": "^1.6",
+        "brianium/paratest": "^6.7"
     },
     "autoload": {
         "psr-4": {
