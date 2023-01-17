@@ -540,7 +540,7 @@ class Parser
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
-    public static function load($filename): Spreadsheet
+    public static function load($filename)
     {
         $reader = IOFactory::createReaderForFile($filename);
         //读取带格式cell会有问题，暂时注释
