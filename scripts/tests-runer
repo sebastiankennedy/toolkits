@@ -11,9 +11,9 @@ help() {
     echo "  scripts/run-tests <path> --xdebug --filter <expr> -p <num> --coverage-html <path> "
     echo
     echo -e "\033[33mOptions:\033[0m"
-    echo -e "  \033[32mpath\033[0m                           The path or file that contains test files. "
-    echo -e "  \033[32m-p <num>\033[0m                       The number of processes to run tests in parallel. "
-    echo -e "  \033[32m--filter <expr>\033[0m                The expression to filter what test methods should be executed. "
+    echo -e "  \033[32mpath\033[0m                           The path or file that contains test files."
+    echo -e "  \033[32m-p <num>\033[0m                       The number of processes to run tests in parallel."
+    echo -e "  \033[32m--filter <expr>\033[0m                The expression to filter what test methods should be executed."
     echo -e "  \033[32m--coverage-html <path>\033[0m         Generate html code coverage report in the specified <path>."
     echo -e "  \033[32m-h, --help\033[0m                     Display this help message."
     echo -e "  \033[32m-x, --xdebug\033[0m                   Run tests under XDebug."
