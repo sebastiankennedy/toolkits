@@ -21,12 +21,22 @@ help() {
 }
 
 params=
-xdebug_params="
+if php -r "exit(version_compare('3.0', phpversion('xdebug'), '>=') ? 1:0);"; then
+    xdebug_params="
     -d xdebug.mode=debug
     -d xdebug.start_with_request=yes
     -d xdebug.client_port=9003
     -d xdebug.client_host=127.0.0.1
 "
+else
+    xdebug_params="
+    -d xdebug.remote_enable=1
+    -d xdebug.remote_autostart=1
+    -d xdebug.remote_port=9003
+    -d xdebug.remote_host=127.0.0.1
+"
+fi
+
 prepare_params() {
     for arg in "$@"; do
         if [[ "$arg" == "-x" || "$arg" == "--xdebug" ]]; then
@@ -42,15 +52,15 @@ prepare_params() {
         fi
     done
 }
-prepare_params $*
+prepare_params "$*"
 
 run() {
     if [[ "$use_paratest" == "0" ]]; then
-        $php $params vendor/bin/phpunit $*
+        $php "$params" vendor/bin/phpunit "$*"
     elif [[ "$use_coverage" == "1" ]]; then
-        $php $params vendor/bin/paratest $*
+        $php "$params" vendor/bin/paratest "$*"
     else
-        $php $params vendor/bin/paratest -f $*
+        $php "$params" vendor/bin/paratest -f "$*"
     fi
 }
 
@@ -64,7 +74,7 @@ filter_args() {
         args="$args $arg"
     done
 
-    echo $args
+    echo "$args"
 }
 
 case $1 in
@@ -72,6 +82,6 @@ case $1 in
     help
     ;;
 *)
-    run $(filter_args $*)
+    run $(filter_args "$*")
     ;;
 esac
