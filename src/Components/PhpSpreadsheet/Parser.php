@@ -1,8 +1,4 @@
 <?php
-/**
- * @link http://www.seiue.com
- * @license Copyright (c) 2015 Seiue Inc.
- */
 
 namespace Luyiyuan\Toolkits\Components\PhpSpreadsheet;
 
@@ -153,7 +149,7 @@ class Parser
     protected function formatMessage($message, $params): string
     {
         $placeholders = [];
-        foreach ((array) $params as $name => $value) {
+        foreach ((array)$params as $name => $value) {
             $placeholders['{' . $name . '}'] = $value;
         }
 
@@ -163,10 +159,13 @@ class Parser
     protected function validateRequired($field, $value, $params = []): bool
     {
         if ($isEmpty = $this->isEmpty($value)) {
-            $message = $this->formatMessage($params['message'] ?? "The '{field}' field is required",
+            $message = $this->formatMessage(
+                $params['message'] ?? "The '{field}' field is required",
                 [
-                    'field' => $field, 'value' => $value,
-                ]);
+                    'field' => $field,
+                    'value' => $value,
+                ]
+            );
             $this->addError('validation', $field, $message);
         }
 
@@ -181,10 +180,13 @@ class Parser
         $in = $params['range'] ?? [];
 
         if (! ($inArray = in_array($value, $in))) {
-            $message = $this->formatMessage($params['message'] ?? "The '{field}' field is invalid",
+            $message = $this->formatMessage(
+                $params['message'] ?? "The '{field}' field is invalid",
                 [
-                    'field' => $field, 'value' => $value,
-                ]);
+                    'field' => $field,
+                    'value' => $value,
+                ]
+            );
             $this->addError('validation', $field, $message);
         }
 
@@ -200,10 +202,13 @@ class Parser
         }
 
         if (! ($matched = preg_match($pattern, $value))) {
-            $message = $this->formatMessage($params['message'] ?? "The '{field}' field is invalid",
+            $message = $this->formatMessage(
+                $params['message'] ?? "The '{field}' field is invalid",
                 [
-                    'field' => $field, 'value' => $value,
-                ]);
+                    'field' => $field,
+                    'value' => $value,
+                ]
+            );
             $this->addError('validation', $field, $message);
         }
 
@@ -217,11 +222,11 @@ class Parser
         $compareValue = $params['compareValue'];
 
         if ($type === 'number') {
-            $value = (float) $value;
-            $compareValue = (float) $compareValue;
+            $value = (float)$value;
+            $compareValue = (float)$compareValue;
         } else {
-            $value = (string) $value;
-            $compareValue = (string) $compareValue;
+            $value = (string)$value;
+            $compareValue = (string)$compareValue;
         }
 
         $result = false;
@@ -253,10 +258,13 @@ class Parser
         }
 
         if (! $result) {
-            $message = $this->formatMessage($params['message'] ?? "The '{field}' field is invalid",
+            $message = $this->formatMessage(
+                $params['message'] ?? "The '{field}' field is invalid",
                 [
-                    'field' => $field, 'value' => $value,
-                ]);
+                    'field' => $field,
+                    'value' => $value,
+                ]
+            );
             $this->addError('validation', $field, $message);
         }
 
@@ -300,6 +308,7 @@ class Parser
                             'label' => $definition['label'] ?? $rawData,
                         ];
                     }
+
                     return false;
                 };
             }
@@ -326,8 +335,11 @@ class Parser
             }
 
             if (is_array($defBackup) && isset($defBackup['required']) && $defBackup['required'] && ! $hasDefinition) {
-                $this->addError('definition', $field,
-                    strtr($this->requiredColumnMessage, ['{name}' => $defBackup['label']]));
+                $this->addError(
+                    'definition',
+                    $field,
+                    strtr($this->requiredColumnMessage, ['{name}' => $defBackup['label']])
+                );
             }
         }
 
@@ -347,6 +359,7 @@ class Parser
         $columns = $this->getColumns();
         if ($this->_sheet->getHighestRow() < 2 + $this->skipRows) {
             $this->addError('validation', '', '导入模板未填写任何信息，请检查修改后上传');
+
             return $data;
         }
         $rows = $this->_sheet->getRowIterator(2 + $this->skipRows);
@@ -366,6 +379,7 @@ class Parser
             }
             $data[] = $dataRow;
         }
+
         return $data;
     }
 
@@ -398,7 +412,7 @@ class Parser
     }
 
     /**
-     * @param  string  $type definition, validation
+     * @param  string  $type  definition, validation
      * @param  string  $field
      * @param $message
      */
@@ -420,10 +434,10 @@ class Parser
      *
      * 获取指定规则的excel表格总列数
      *
-     * @param string  $column
+     * @param  string  $column
      * @return array
      * @throws Exception
-     *@example [A-Z] [A-AR]
+     * @example [A-Z] [A-AR]
      */
     public function getColumnsInRange(string $column = 'A-'): array
     {
@@ -540,7 +554,7 @@ class Parser
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
-    public static function load($filename)
+    public static function load($filename): Spreadsheet
     {
         $reader = IOFactory::createReaderForFile($filename);
         //读取带格式cell会有问题，暂时注释
