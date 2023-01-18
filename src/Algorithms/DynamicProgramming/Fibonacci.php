@@ -39,30 +39,30 @@ class Fibonacci
     public static function recursionWithHelper(int $n): int
     {
         // 使用哈希表（字典）解决重复计算
-        $memo = array_fill(0, $n + 1, 0);
+        $hash = array_fill(0, $n + 1, 0);
 
-        return self::helper($memo, $n);
+        return self::helper($hash, $n);
     }
 
     /**
      * @link 递归：https://time.geekbang.org/column/article/41440
      *
-     * @param  array<int>  $memo
+     * @param  array<int>  $hash
      * @param  int  $n
      * @return int
      */
-    public static function helper(array &$memo, int $n): int
+    public static function helper(array &$hash, int $n): int
     {
         if ($n < 2) {
             return $n;
         }
 
-        if ($memo[$n] > 0) {
-            return $memo[$n];
+        if ($hash[$n] > 0) {
+            return $hash[$n];
         }
-        $memo[$n] = self::helper($memo, $n - 1) + self::helper($memo, $n - 2);
+        $hash[$n] = self::helper($hash, $n - 1) + self::helper($hash, $n - 2);
 
-        return $memo[$n];
+        return $hash[$n];
     }
 
     /**

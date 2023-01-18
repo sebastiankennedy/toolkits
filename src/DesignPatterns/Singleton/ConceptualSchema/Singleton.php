@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luyiyuan\Toolkits\DesignPatterns\Singleton;
+namespace Luyiyuan\Toolkits\DesignPatterns\Singleton\ConceptualSchema;
 
 use JsonSerializable;
 use LogicException;

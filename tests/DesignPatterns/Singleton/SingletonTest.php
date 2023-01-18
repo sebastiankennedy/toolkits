@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Luyiyuan\Toolkits\Tests\DesignPatterns\Singleton;
 
 use LogicException;
-use Luyiyuan\Toolkits\DesignPatterns\Singleton\Singleton;
+use Luyiyuan\Toolkits\DesignPatterns\Singleton\ConceptualSchema\Singleton;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
 /**
