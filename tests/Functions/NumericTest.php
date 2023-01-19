@@ -39,6 +39,7 @@ class NumericTest extends TestCase
         $this->assertEquals(8.8, double($b));
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The value must be an integer or float.');
+        // @phpstan-ignore-next-line
         double($c);
     }
 }

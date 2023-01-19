@@ -18,7 +18,12 @@ use function Luyiyuan\Toolkits\Functions\weekday_to_chinese;
 
 class DateTest extends TestCase
 {
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    /**
+     * @param  string|null  $name
+     * @param  array<mixed>  $data
+     * @param  string  $dataName
+     */
+    public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         date_default_timezone_set("PRC");

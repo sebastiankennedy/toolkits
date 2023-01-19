@@ -21,7 +21,7 @@ interface Validatable
     /**
      * Returns the validation rules.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function rules(): array;
 
@@ -31,14 +31,14 @@ interface Validatable
      * @return bool
      * @throws ValidationException
      */
-    public function validate();
+    public function validate(): bool;
 
     /**
      * Create new instance with given attributes and number.
      *
-     * @param  array  $attributes
+     * @param  array<mixed>  $attributes
      * @param  int  $number
      * @return static
      */
-    public static function make(array $attributes, int $number);
+    public static function make(array $attributes, int $number): Validatable;
 }

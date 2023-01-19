@@ -38,7 +38,7 @@ class FileTest extends TestCase
 
     /**
      * @param  string|null  $name
-     * @param  array  $data
+     * @param  array<mixed>  $data
      * @param  string  $dataName
      */
     public function __construct(?string $name = null, array $data = [], string $dataName = '')
