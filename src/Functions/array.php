@@ -165,9 +165,8 @@ if (! function_exists('array_order_by')) {
      * $sorted = array_order_by($data, 'volume', SORT_DESC, 'edition', SORT_ASC);
      *
      */
-    function array_order_by()
+    function array_order_by(...$args)
     {
-        $args = func_get_args();
         $data = array_shift($args);
         foreach ($args as $n => $field) {
             if (is_string($field)) {

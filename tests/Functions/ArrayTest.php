@@ -23,6 +23,11 @@ class ArrayTest extends TestCase
 
     public string $file;
 
+    /**
+     * @param  string|null  $name
+     * @param  array<mixed>  $data
+     * @param $dataName
+     */
     public function __construct(?string $name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
@@ -77,9 +82,9 @@ class ArrayTest extends TestCase
 
     /**
      * @dataProvider array_index_by_case
-     * @param  array  $data
-     * @param  array|string|int|callable  $key
-     * @param  array  $expected
+     * @param  array<mixed>  $data
+     * @param  array<mixed>|string|int|callable  $key
+     * @param  array<mixed>  $expected
      * @return void
      */
     public function test_array_index_by(array $data, $key, array $expected): void
@@ -89,9 +94,9 @@ class ArrayTest extends TestCase
 
     /**
      * @dataProvider value_of_key_case
-     * @param $item
-     * @param $key
-     * @param $expected
+     * @param mixed $item
+     * @param mixed $key
+     * @param mixed $expected
      * @return void
      */
     public function test_value_of_key($item, $key, $expected): void
@@ -101,13 +106,13 @@ class ArrayTest extends TestCase
 
     /**
      * @dataProvider test_array_order_by_case
-     * @param $data
-     * @param $fieldA
-     * @param $order
-     * @param $expected
+     * @param  array<mixed>  $data
+     * @param  string  $fieldA
+     * @param  int  $order
+     * @param  array<mixed>  $expected
      * @return void
      */
-    public function test_array_order_by($data, $fieldA, $order, $expected): void
+    public function test_array_order_by(array $data, string $fieldA, int $order, array $expected): void
     {
         $this->assertEquals($expected, array_order_by($data, $fieldA, $order));
     }
