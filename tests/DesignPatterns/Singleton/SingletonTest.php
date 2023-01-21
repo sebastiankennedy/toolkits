@@ -14,20 +14,14 @@ use Luyiyuan\Toolkits\Tests\TestCase;
  */
 class SingletonTest extends TestCase
 {
-    /**
-     * @test
-     */
-    public function ensure_a_class_has_only_one_instance()
+    public function test_ensure_a_class_has_only_one_instance(): void
     {
         $singletonA = Singleton::getInstance();
         $singletonB = Singleton::getInstance();
         $this->assertEquals($singletonA, $singletonB);
     }
 
-    /**
-     * @test
-     */
-    public function singleton_cannot_be_json_serialize()
+    public function test_singleton_cannot_be_json_serialize(): void
     {
         $singleton = Singleton::getInstance();
         $this->expectException(LogicException::class);
@@ -35,10 +29,7 @@ class SingletonTest extends TestCase
         json_encode($singleton);
     }
 
-    /**
-     * @test
-     */
-    public function singleton_cannot_be_cloneable()
+    public function test_singleton_cannot_be_cloneable(): void
     {
         $singleton = Singleton::getInstance();
         $this->assertInstanceOf(Singleton::class, $singleton);
@@ -49,10 +40,7 @@ class SingletonTest extends TestCase
         $this->assertNotEquals($singleton, $clone);
     }
 
-    /**
-     * @test
-     */
-    public function singleton_cannot_be_serializable()
+    public function test_singleton_cannot_be_serializable(): void
     {
         $singleton = Singleton::getInstance();
         $this->expectException(LogicException::class);
