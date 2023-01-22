@@ -6,6 +6,9 @@ use stdClass;
 
 trait ArrayDataProvider
 {
+    /**
+     * @return array<mixed>
+     */
     public function array_index_by_case(): array
     {
         return [
@@ -78,6 +81,9 @@ trait ArrayDataProvider
         ];
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function value_of_key_case(): array
     {
         $object = new stdClass();
@@ -107,6 +113,9 @@ trait ArrayDataProvider
         ];
     }
 
+    /**
+     * @return array<mixed>
+     */
     public function test_array_order_by_case(): array
     {
         return [
