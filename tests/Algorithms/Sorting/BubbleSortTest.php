@@ -30,6 +30,7 @@ class BubbleSortTest extends TestCase
 
     public function test_sort_by(): void
     {
+        $temp = [];
         $multiArray = csv_to_array(__DIR__ . '/./../../Data/scores.csv');
 
         foreach ($multiArray as $value) {
@@ -45,7 +46,6 @@ class BubbleSortTest extends TestCase
 
         foreach ($temp as $key => $items) {
             BubbleSort::sortBy('score', $items, 'desc');
-
             echo str_repeat('=', 14) . $key . str_repeat('=', 14) . PHP_EOL;
             foreach ($items as $item) {
                 echo sprintf("学生%s在科目%s得分为%s", $item['student_name'], $item['subject_name'], $item['score']) . PHP_EOL;

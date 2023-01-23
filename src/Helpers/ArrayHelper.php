@@ -11,7 +11,7 @@ use function Luyiyuan\Toolkits\Functions\array_swap;
 class ArrayHelper extends Arr
 {
     /**
-     * @param  array  $data
+     * @param  array<mixed> $data
      * @param  int|string  $i
      * @param  int|string  $j
      * @return void

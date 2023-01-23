@@ -79,10 +79,10 @@ if (! function_exists('double')) {
      */
     function double($value)
     {
-        if (is_int($value) || is_float($value)) {
-            return $value * 2;
+        if (! is_int($value) || ! is_float($value)) {
+            throw new InvalidArgumentException('The value must be an integer or float.');
         }
 
-        throw new InvalidArgumentException('The value must be an integer or float.');
+        return $value * 2;
     }
 }
