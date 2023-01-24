@@ -74,15 +74,15 @@ if (! function_exists('compare_float_value')) {
 
 if (! function_exists('double')) {
     /**
-     * @param  int|float  $value
+     * @param  mixed  $value
      * @return int|float
      */
     function double($value)
     {
-        if (! is_int($value) || ! is_float($value)) {
-            throw new InvalidArgumentException('The value must be an integer or float.');
+        if (is_int($value) || is_float($value)) {
+            return $value * 2;
         }
 
-        return $value * 2;
+        throw new InvalidArgumentException('The value must be an integer or float.');
     }
 }
