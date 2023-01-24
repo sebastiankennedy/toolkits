@@ -103,10 +103,10 @@ if (! function_exists('fail_if_not_file')) {
     /**
      * 文件不是正常文件则抛出异常
      *
-     * @param $file
+     * @param  string  $file
      * @return void
      */
-    function fail_if_not_file($file): void
+    function fail_if_not_file(string $file): void
     {
         fail_if_file_not_exists($file);
 
@@ -120,10 +120,10 @@ if (! function_exists('fail_if_not_dir')) {
     /**
      * 如果文件不是一个目录则抛出异常
      *
-     * @param $file
+     * @param string $file
      * @return void
      */
-    function fail_if_not_dir($file): void
+    function fail_if_not_dir(string $file): void
     {
         fail_if_file_not_exists($file);
         if (! is_dir($file)) {
@@ -136,10 +136,10 @@ if (! function_exists('file_get_contents_or_fail')) {
     /**
      * 如果文件获取不到内容则抛出异常
      *
-     * @param $file
+     * @param  string  $file
      * @return string
      */
-    function file_get_contents_or_fail($file): string
+    function file_get_contents_or_fail(string $file): string
     {
         // 判断是否为本地文件
         if (filter_var($file, FILTER_VALIDATE_URL) === false) {
@@ -167,7 +167,7 @@ if (! function_exists('scan_dir_or_fail')) {
      *
      * @param  string  $directory
      * @param  bool  $excludeDotDirs
-     * @return array
+     * @return array<mixed>
      */
     function scan_dir_or_fail(string $directory, bool $excludeDotDirs = false): array
     {
@@ -175,11 +175,11 @@ if (! function_exists('scan_dir_or_fail')) {
         fail_if_not_dir($directory);
 
         $scannedDirectory = scandir($directory);
-        if ($excludeDotDirs === false) {
-            $scannedDirectory = array_diff($scannedDirectory, ['.', '..']);
+        if ($excludeDotDirs === false && is_array($scannedDirectory)) {
+            return array_diff($scannedDirectory, ['.', '..']);
         }
 
-        return $scannedDirectory;
+        return [];
     }
 }
 
@@ -188,9 +188,9 @@ if (! function_exists('join_paths')) {
      * 合并多个路径
      *
      * @param  string  ...$paths
-     * @return string
+     * @return null|string
      */
-    function join_paths(string ...$paths): string
+    function join_paths(string ...$paths): ?string
     {
         return preg_replace('~[/\\\\]+~', DIRECTORY_SEPARATOR, implode(DIRECTORY_SEPARATOR, $paths));
     }
@@ -224,7 +224,7 @@ if (! function_exists('csv_to_array')) {
      * @param  bool  $parseHeader
      * @param  int  $length
      * @param  string  $delimiter
-     * @return array
+     * @return array<mixed>
      * @example
      * Luis,100,100
      * Sebastian,90,90
@@ -263,8 +263,12 @@ if (! function_exists('csv_to_array')) {
     {
         fail_if_file_not_exists($file);
         fail_if_file_not_readable($file);
+        if ($length > PHP_INT_MAX || $length < 0) {
+            throw new InvalidArgumentException('invalid positive integer');
+        }
 
-        $rows = [];
+
+        $rows = $header = [];
         $handle = file_open_or_fail($file, 'r');
 
         $row = fgetcsv($handle, $length, $delimiter);
@@ -277,7 +281,9 @@ if (! function_exists('csv_to_array')) {
         try {
             while (($row = fgetcsv($handle, $length, $delimiter)) !== false) {
                 if ($parseHeader) {
-                    $rows[] = array_combine($header, $row);
+                    if (is_array($header) && is_array($row)) {
+                        $rows[] = array_combine($header, $row);
+                    }
                 } else {
                     $rows[] = $row;
                 }
@@ -295,11 +301,15 @@ if (! function_exists('csv_to_array')) {
 if (! function_exists('simply_csv_to_array')) {
     /**
      * @param  string  $file
-     * @return array
+     * @return array<mixed>
      */
     function simply_csv_to_array(string $file): array
     {
-        $rows = array_map('str_getcsv', file($file));
+        if (! $rawRows = file($file)) {
+            return [];
+        }
+
+        $rows = array_map('str_getcsv', $rawRows);
         $header = array_shift($rows);
         $data = [];
         foreach ($rows as $row) {
@@ -311,6 +321,10 @@ if (! function_exists('simply_csv_to_array')) {
 }
 
 if (! function_exists('path_info')) {
+    /**
+     * @param  string  $path
+     * @return array<string>
+     */
     function path_info(string $path): array
     {
         fail_if_file_not_exists($path);
@@ -323,12 +337,20 @@ if (! function_exists('path_info')) {
 }
 
 if (! function_exists('make_temp')) {
+    /**
+     * @param  string  $type
+     * @return string
+     */
     function make_temp(string $type): string
     {
         $tempDir = sys_get_temp_dir();
         do {
             $name = join_paths($tempDir, uniqid());
+            if ($name === null) {
+                throw new RuntimeException('unable to create temporary directory');
+            }
         } while (file_exists($name));
+
 
         if ($type === 'file') {
             if (! touch($name)) {
@@ -345,6 +367,9 @@ if (! function_exists('make_temp')) {
 }
 
 if (! function_exists('make_temp_file')) {
+    /**
+     * @return string
+     */
     function make_temp_file(): string
     {
         return make_temp('file');
@@ -352,6 +377,9 @@ if (! function_exists('make_temp_file')) {
 }
 
 if (! function_exists('make_temp_dir')) {
+    /**
+     * @return string
+     */
     function make_temp_dir(): string
     {
         return make_temp('dir');
@@ -359,6 +387,11 @@ if (! function_exists('make_temp_dir')) {
 }
 
 if (! function_exists('unzip')) {
+    /**
+     * @param  string  $path
+     * @param  string|null  $dst
+     * @return string
+     */
     function unzip(string $path, ?string $dst = null): string
     {
         $extension = path_info($path)['extension'];
