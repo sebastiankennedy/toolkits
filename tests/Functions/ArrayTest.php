@@ -105,7 +105,7 @@ class ArrayTest extends TestCase
     }
 
     /**
-     * @dataProvider test_array_order_by_case
+     * @dataProvider array_order_by_case
      * @param  array<mixed>  $data
      * @param  string  $fieldA
      * @param  int  $order
