@@ -45,12 +45,12 @@ if (! function_exists('compare_grade')) {
 
 if (! function_exists('rank')) {
     /**
-     * @param  array $rows
+     * @param  array<mixed> $rows
      * @param  string  $compareField
      * @param  int  $precision
      * @param  string  $rankField
      * @param  string  $rankBaseField
-     * @return array
+     * @return array<mixed>
      *
      * @link https://www.php.net/manual/zh/array.sorting.php
      */
@@ -95,9 +95,9 @@ if (! function_exists('array_index_by')) {
     /**
      * 自定义索引数组
      *
-     * @param  array  $items
-     * @param  array|string|int|callable  $key
-     * @return array
+     * @param  array<mixed>  $items
+     * @param  array<mixed>|string|int|callable  $key
+     * @return array<mixed>
      */
     function array_index_by(array $items, $key): array
     {
@@ -125,8 +125,8 @@ if (! function_exists('value_of_key')) {
     /**
      * 灵活获取键的值
      *
-     * @param  array|object  $item
-     * @param  array|int|string  $key
+     * @param  array<mixed>|object  $item
+     * @param  array<mixed>|int|string  $key
      * @return mixed
      */
     function value_of_key($item, $key)
@@ -152,7 +152,7 @@ if (! function_exists('value_of_key')) {
 if (! function_exists('array_order_by')) {
     /**
      * 多字段排序
-     *
+     * @param mixed $args
      * @return mixed|null
      * @example
      * $data[] = array('volume' => 67, 'edition' => 2);
@@ -188,8 +188,8 @@ if (! function_exists('is_subset_of_set')) {
     /**
      * 是否为子集
      *
-     * @param  array  $subset
-     * @param  array  $set
+     * @param  array<mixed>  $subset
+     * @param  array<mixed>  $set
      * @return bool
      */
     function is_subset_of_set(array $subset, array $set): bool
@@ -202,8 +202,8 @@ if (! function_exists('is_intersection_of_set')) {
     /**
      * 是否为交集
      *
-     * @param  array  $intersection
-     * @param  array  $set
+     * @param  array<mixed>  $intersection
+     * @param  array<mixed>  $set
      * @return bool
      */
     function is_intersection_of_set(array $intersection, array $set): bool
@@ -216,8 +216,8 @@ if (! function_exists('is_difference_of_set')) {
     /**
      * 是否为差集
      *
-     * @param  array  $difference
-     * @param  array  $set
+     * @param  array<mixed>  $difference
+     * @param  array<mixed>  $set
      * @return bool
      */
     function is_difference_of_set(array $difference, array $set): bool
@@ -230,7 +230,7 @@ if (! function_exists('array_swap')) {
     /**
      * 交换数组元素
      *
-     * @param  array  $data
+     * @param  array<mixed>  $data
      * @param  int|string  $i
      * @param  int|string  $j
      * @return void
