@@ -116,7 +116,7 @@ trait ArrayDataProvider
     /**
      * @return array<mixed>
      */
-    public function test_array_order_by_case(): array
+    public function array_order_by_case(): array
     {
         return [
             'volume desc' => [
