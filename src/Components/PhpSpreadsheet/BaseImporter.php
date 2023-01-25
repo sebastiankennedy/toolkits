@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Luyiyuan\Toolkits\Components\PhpSpreadsheet;
 
-use Luyiyuan\Toolkits\Components\Exceptions\ValidationException;
+use Luyiyuan\Toolkits\Components\Validator\ValidationException;
 use PhpOffice\PhpSpreadsheet\Calculation\Exception;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
@@ -48,7 +48,7 @@ class BaseImporter extends Parser
     /**
      * @param  string  $field
      * @param  mixed  $value
-     * @param  array  $params
+     * @param  array<mixed>  $params
      * @return bool
      */
     protected function validateInteger(string $field, $value, array $params): bool
@@ -90,6 +90,7 @@ class BaseImporter extends Parser
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws ValidationException
+     * @return array<mixed>
      */
     public function parse(): array
     {
