@@ -15,12 +15,10 @@ abstract class AbstractHandler implements Handler
         return $handle;
     }
 
-    public function handle($request)
+    public function handle($next): void
     {
         if ($this->nextHandler) {
-            $this->nextHandler->handle($request);
+            $this->nextHandler->handle($next);
         }
-
-        return null;
     }
 }
