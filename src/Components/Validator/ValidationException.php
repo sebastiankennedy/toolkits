@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luyiyuan\Toolkits\Components\Exceptions;
+namespace Luyiyuan\Toolkits\Components\Validator;
 
 use Exception;
 use Illuminate\Validation\Validator;
@@ -11,15 +11,20 @@ use Throwable;
 /**
  * Class ValidationException
  *
- * @package phpapi\support\validation
+ * @phpstan-consistent-constructor
  */
 class ValidationException extends Exception
 {
     /**
-     * @var array
+     * @var array<mixed>
      */
     public array $errors;
 
+    /**
+     * @param  array<mixed>  $errors
+     * @param  int  $code
+     * @param  Throwable|null  $previous
+     */
     public function __construct(array $errors, int $code = 0, ?Throwable $previous = null)
     {
         $this->errors = $errors;
@@ -59,7 +64,7 @@ class ValidationException extends Exception
 
     /**
      * @param Validatable|null $owner
-     * @return array
+     * @return array<mixed>
      */
     protected static function resolveRowNumber(?Validatable $owner = null): array
     {
@@ -105,7 +110,7 @@ class ValidationException extends Exception
 
     /**
      * @param mixed $error
-     * @return array
+     * @return array<mixed>
      */
     protected static function normalizeError($error): array
     {
@@ -119,7 +124,7 @@ class ValidationException extends Exception
     /**
      * Create a ValidationException from raw array.
      *
-     * @param array $errors
+     * @param array<mixed> $errors
      * @return static
      */
     public static function fromArray(array $errors): ValidationException
