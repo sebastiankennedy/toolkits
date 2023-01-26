@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luyiyuan\Toolkits\Components\Exceptions;
+namespace Luyiyuan\Toolkits\Components\Validator;
 
 /**
  * Interface Validatable
- *
- * @package phpapi\support\validation
  */
 interface Validatable
 {
