@@ -107,7 +107,7 @@ class BaseImporter extends Parser
      * @return bool
      * @throws ValidationException|\PhpOffice\PhpSpreadsheet\Exception
      */
-    public function validate($clearErrors = true): bool
+    public function validate(bool $clearErrors = true): bool
     {
         try {
             return parent::validate($clearErrors);
