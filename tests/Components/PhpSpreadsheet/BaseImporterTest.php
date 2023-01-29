@@ -7,10 +7,15 @@ namespace Luyiyuan\Toolkits\Tests\Components\PhpSpreadsheet;
 use Luyiyuan\Toolkits\Components\PhpSpreadsheet\BaseImporter;
 use Luyiyuan\Toolkits\Tests\TestCase;
 
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
+
 use function Luyiyuan\Toolkits\Functions\fail_if_file_not_exists;
 
 class BaseImporterTest extends TestCase
 {
+    /**
+     * @throws Exception
+     */
     public function testImport(): void
     {
         $file = __DIR__ . '/../../Data/Csv/scores.csv';
