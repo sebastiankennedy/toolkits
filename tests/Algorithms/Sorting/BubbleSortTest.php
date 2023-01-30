@@ -31,7 +31,7 @@ class BubbleSortTest extends TestCase
     public function test_sort_by(): void
     {
         $temp = [];
-        $multiArray = csv_to_array(__DIR__ . '/./../../Data/scores.csv');
+        $multiArray = csv_to_array(__DIR__ . '/./../../Data/Csv/scores.csv');
 
         foreach ($multiArray as $value) {
             $temp[$value['考试科目名称']][] = [

@@ -12,7 +12,7 @@ use Luyiyuan\Toolkits\Helpers\ArrayHelper;
 class BubbleSort
 {
     /**
-     * @param  array
+     * @param  array<mixed>  $array
      * @param  string  $order
      * @return void
      */
@@ -38,7 +38,7 @@ class BubbleSort
 
     /**
      * @param  string  $filed
-     * @param  array<array>  $array
+     * @param  array<mixed>  $array
      * @param  string  $order
      * @return void
      */
