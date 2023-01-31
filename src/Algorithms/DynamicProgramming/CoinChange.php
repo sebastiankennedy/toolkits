@@ -104,6 +104,7 @@ class CoinChange
         // 当目标金额为 i 时，至少需要 $dp[i] 枚硬币凑出
         $dp = array_fill(0, $amount + 1, PHP_INT_MAX);
 
+        // @phpstan-ignore-next-line
         $dp[0] = 0;
         $count = count($dp);
         for ($i = 0; $i < $count; $i++) {
@@ -115,6 +116,6 @@ class CoinChange
             }
         }
 
-        return ($dp[$amount] === PHP_INT_MAX) ? -1 : $dp[$amount];
+        return ($dp[$amount] === PHP_INT_MAX) ? -1 : intval($dp[$amount]);
     }
 }
