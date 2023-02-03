@@ -179,7 +179,7 @@ if (! function_exists('scan_dir_or_fail')) {
             return array_diff($scannedDirectory, ['.', '..']);
         }
 
-        return [];
+        return $scannedDirectory;
     }
 }
 
