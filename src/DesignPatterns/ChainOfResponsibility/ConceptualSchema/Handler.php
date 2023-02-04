@@ -8,5 +8,8 @@ interface Handler
 {
     public function setNext(Handler $handle): Handler;
 
-    public function handle($request);
+    /**
+     * @param mixed $next
+     */
+    public function handle($next): void;
 }

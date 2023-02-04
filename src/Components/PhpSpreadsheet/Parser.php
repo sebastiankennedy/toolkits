@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Luyiyuan\Toolkits\Components\PhpSpreadsheet;
 
 use BadMethodCallException;
@@ -40,7 +42,7 @@ class Parser
     /**
      * Declare rules for excel cell validation.
      *
-     * @return array
+     * @return array<mixed>
      *
      * [
      *   [
@@ -65,7 +67,7 @@ class Parser
     /**
      * Declare rules to extract meta information from header row.
      *
-     * @return array
+     * @return array<mixed>
      * [
      *  'name' => 'DisplayName',
      *  'name' => ['DisplayName', 'Alias1', 'Alias2'],
@@ -80,7 +82,7 @@ class Parser
     /**
      * @throws Exception
      */
-    public function validate($clearErrors = true): bool
+    public function validate(bool $clearErrors = true): bool
     {
         if ($clearErrors) {
             $this->clearErrors();
@@ -111,15 +113,15 @@ class Parser
     /**
      * Validate a value against multiple rules.
      *
-     * @param $field
-     * @param $value
-     * @param  array  $rules
+     * @param  string  $field
+     * @param  mixed  $value
+     * @param  array<mixed>  $rules
      * [
      *   ['name', 'param1' => 1, 'param2' => 2],
      *   ...
      * ]
      */
-    public function validateRules($field, $value, array $rules = [])
+    public function validateRules(string $field, $value, array $rules = []): void
     {
         foreach ($rules as $rule) {
             $params = array_slice($rule, 1);
@@ -133,30 +135,45 @@ class Parser
                 continue;
             }
 
+            // @phpstan-ignore-next-line
             $result = call_user_func([$this, $validator], $field, $value, $params);
-
             if (! $result) {
                 break;
             }
         }
     }
 
+    /**
+     * @param  mixed  $value
+     * @return bool
+     */
     protected function isEmpty($value): bool
     {
         return $value === null || $value === [] || $value === '';
     }
 
-    protected function formatMessage($message, $params): string
+    /**
+     * @param  string  $message
+     * @param  array<mixed>  $params
+     * @return string
+     */
+    protected function formatMessage(string $message, array $params): string
     {
         $placeholders = [];
-        foreach ((array)$params as $name => $value) {
+        foreach ($params as $name => $value) {
             $placeholders['{' . $name . '}'] = $value;
         }
 
         return strtr($message, $placeholders);
     }
 
-    protected function validateRequired($field, $value, $params = []): bool
+    /**
+     * @param  string  $field
+     * @param  mixed  $value
+     * @param  array<mixed>  $params
+     * @return bool
+     */
+    protected function validateRequired(string $field, $value, array $params = []): bool
     {
         if ($isEmpty = $this->isEmpty($value)) {
             $message = $this->formatMessage(
@@ -172,7 +189,13 @@ class Parser
         return ! $isEmpty;
     }
 
-    protected function validateIn($field, $value, $params = []): bool
+    /**
+     * @param  string  $field
+     * @param  mixed  $value
+     * @param  array<mixed>  $params
+     * @return bool
+     */
+    protected function validateIn(string $field, $value, array $params = []): bool
     {
         if ($this->isEmpty($value)) {
             return true;
@@ -193,7 +216,13 @@ class Parser
         return $inArray;
     }
 
-    protected function validateRegexp($field, $value, $params = [])
+    /**
+     * @param  string  $field
+     * @param  mixed  $value
+     * @param  array<mixed>  $params
+     * @return bool|int
+     */
+    protected function validateRegexp(string $field, $value, array $params = [])
     {
         $pattern = $params['pattern'];
 
@@ -215,7 +244,13 @@ class Parser
         return $matched;
     }
 
-    protected function validateCompare($field, $value, $params = []): bool
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @param array<mixed> $params
+     * @return bool
+     */
+    protected function validateCompare(string $field, $value, array $params = []): bool
     {
         $type = $params['type'] ?? 'string';
         $operator = $params['operator'] ?? '==';
@@ -271,19 +306,22 @@ class Parser
         return $result;
     }
 
-    private $_columns;
+    /**
+     * @var array<mixed>
+     */
+    private array $_columns;
 
     /**
      * Get the column definitions.
      *
      * @param  bool  $refresh
      *
-     * @return array|false Array of the definition, indexed by column names.
+     * @return array<mixed>|false Array of the definition, indexed by column names.
      * @throws Exception
      */
     public function getColumns(bool $refresh = false)
     {
-        if ($this->_columns !== null && ! $refresh) {
+        if (! $refresh) {
             return $this->_columns;
         }
 
@@ -352,6 +390,7 @@ class Parser
 
     /**
      * @throws Exception
+     * @return array<mixed>
      */
     public function parse(): array
     {
@@ -374,6 +413,7 @@ class Parser
                 if (! isset($columns[$column])) {
                     continue;
                 }
+                // @phpstan-ignore-next-line
                 $columnDef = $columns[$column];
                 $dataRow[$columnDef['name']] = trim($this->getValue($cell));
             }
@@ -383,6 +423,10 @@ class Parser
         return $data;
     }
 
+    /**
+     * @param  Cell  $cell
+     * @return false|mixed|string
+     */
     protected function getValue(Cell $cell)
     {
         $value = $cell->getValue();
@@ -394,18 +438,24 @@ class Parser
         return $value;
     }
 
+    /**
+     * @var array<mixed>
+     */
     protected array $_errors = [];
 
     /**
      * Returns parsing & validation errors as array.
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getErrors(): array
     {
         return $this->_errors;
     }
 
+    /**
+     * @return bool
+     */
     public function hasErrors(): bool
     {
         return ! empty($this->_errors);
@@ -414,9 +464,9 @@ class Parser
     /**
      * @param  string  $type  definition, validation
      * @param  string  $field
-     * @param $message
+     * @param  string|array<mixed> $message
      */
-    public function addError(string $type, string $field, $message)
+    public function addError(string $type, string $field, $message): void
     {
         if (! is_array($message)) {
             $message = ['message' => $message];
@@ -425,7 +475,10 @@ class Parser
         $this->_errors[] = ['type' => $type, 'field' => $field] + $message;
     }
 
-    public function clearErrors()
+    /**
+     * @return void
+     */
+    public function clearErrors(): void
     {
         $this->_errors = [];
     }
@@ -435,7 +488,7 @@ class Parser
      * 获取指定规则的excel表格总列数
      *
      * @param  string  $column
-     * @return array
+     * @return array<mixed>
      * @throws Exception
      * @example [A-Z] [A-AR]
      */
@@ -466,7 +519,7 @@ class Parser
     /**
      * @param  string  $column
      * @param  string  $row
-     * @return array
+     * @return array<mixed>
      * [
      *   [A, B, C],
      *   [1, 2, 3]
@@ -554,7 +607,7 @@ class Parser
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
-    public static function load($filename): Spreadsheet
+    public static function load(string $filename): Spreadsheet
     {
         $reader = IOFactory::createReaderForFile($filename);
         //读取带格式cell会有问题，暂时注释

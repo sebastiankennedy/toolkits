@@ -34,10 +34,10 @@ class Singleton implements JsonSerializable
      */
     private function __construct()
     {
-        if (static::$again) {
+        if (self::$again) {
             throw new LogicException("cannot instantiate singleton again.");
         } else {
-            static::$again = true;
+            self::$again = true;
         }
     }
 

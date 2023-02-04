@@ -14,7 +14,7 @@ class QuickSort
     /**
      * @link - 需要优化：https://blog.csdn.net/baidu_30000217/article/details/53312990
      *
-     * @param  array<array>  $data
+     * @param  array<mixed>  $data
      * @param  int|null  $left
      * @param  int|null  $right
      * @return void
@@ -56,7 +56,7 @@ class QuickSort
 
     /**
      * @param  string  $field
-     * @param  array[]  $data
+     * @param  array<mixed>  $data
      * @param  int|null  $left
      * @param  int|null  $right
      * @return void

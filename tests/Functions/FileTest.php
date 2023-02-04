@@ -45,7 +45,7 @@ class FileTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
         $this->file = __DIR__ . '/./../Data/Csv/scores.csv';
-        $this->unreadableFile = __DIR__ . '/./../Data/unreadable_file.csv';
+        $this->unreadableFile = __DIR__ . '/./../Data/Csv/unreadable_file.csv';
     }
 
     /**
