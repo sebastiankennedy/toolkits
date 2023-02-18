@@ -1,0 +1,18 @@
+#! /bin/bash
+
+# Usages: ./scripts/docker-runner [extra docker args]
+# Example: ./scripts/docker-runner -d -p 8080:8080 --name="php-74-cli" --link container_name:host_name -e ENV_FILE=.env
+
+# see https://github.com/uber-common/docker-ssh-agent-forward
+if command -v pinata-ssh-mount &>/dev/null; then
+    ssh_agent_args=$(pinata-ssh-mount)
+fi
+
+docker run -it --rm \
+    -v $HOME/.ssh/id_rsa:/root/.ssh/id_rsa \
+    -v $(pwd)/.bash_history:/root/.bash_history \
+    $ssh_agent_args \
+    -v ${COMPOSER_HOST:-$HOME/.composer}:/tmp \
+    -v $(pwd):/srv/www \
+    $* \
+    ccr.ccs.tencentyun.com/luyiyuan/php-74-cli:latest bash
