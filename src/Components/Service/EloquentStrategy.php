@@ -6,15 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
+/**
+ *
+ */
 class EloquentStrategy implements Strategy
 {
+    /**
+     * @var Model
+     */
     private Model $model;
 
+    /**
+     * @param  Model  $model
+     */
     public function __construct(Model $model)
     {
         $this->model = $model;
     }
 
+    /**
+     * @param  Model  $model
+     * @return $this
+     */
     public function setModel(Model $model): EloquentStrategy
     {
         $this->model = $model;
@@ -41,6 +54,11 @@ class EloquentStrategy implements Strategy
         return $data;
     }
 
+    /**
+     * @param  array  $data
+     * @param  string  $uniqueId
+     * @return array
+     */
     public function batchUpdate(array $data, string $uniqueId = 'id'): array
     {
         DB::beginTransaction();

@@ -175,6 +175,7 @@ if (! function_exists('scan_dir_or_fail')) {
         fail_if_not_dir($directory);
 
         $scannedDirectory = scandir($directory);
+        assert($scannedDirectory !== false);
         if ($excludeDotDirs === false && is_array($scannedDirectory)) {
             return array_diff($scannedDirectory, ['.', '..']);
         }
