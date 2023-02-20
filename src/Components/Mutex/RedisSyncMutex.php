@@ -36,7 +36,7 @@ class RedisSyncMutex implements SyncMutex
      *
      * $maxWait 最大为 2 倍的 $ttl ，过长地等待只会导致更多问题，及时暴露异常。
      */
-    public function lock(string $key, string $uuid, ?int $ttl = null, ?int $maxWait = null, ?int $sleepMs = null): void
+    public function lock(string $key, string $uuid, ?int $ttl = null, ?int $maxWait = null, ?int $sleepMs = null): bool
     {
         if (empty($key) || empty($uuid)) {
             throw new InvalidArgumentException('key or uuid must not be empty');
@@ -64,12 +64,18 @@ class RedisSyncMutex implements SyncMutex
              * 随后线程 A 执行完成，线程 A 使用 DEL 命令来释放锁，但此时线程 B 加的锁还没有执行完成，线程 A 实际释放的线程 B 加的锁。
              * 所以需要存入一个 uuid 来判断当前 uuid 是否属于当前线程。
              */
-            $this->client->set($key, $uuid, 'EX', $ttl, 'NX');
-
+            $result = $this->client->set($key, $uuid, 'EX', $ttl, 'NX');
+            if ($result) {
+                break;
+            }
 
             $waited = time() - $startAt;
             usleep($sleepMs);
         } while ($waited < $maxWait);
+
+        if ($result) {
+            return true;
+        }
 
         throw new RuntimeException("failed to lock key $key in $maxWait seconds");
     }
@@ -79,7 +85,7 @@ class RedisSyncMutex implements SyncMutex
      * @param  string  $uuid
      * @return void
      */
-    public function unlock(string $key, string $uuid): void
+    public function unlock(string $key, string $uuid): bool
     {
         if (empty($key) || empty($uuid)) {
             throw new InvalidArgumentException('key or uuid must not be empty');
@@ -104,7 +110,12 @@ else
     return 0
 end
 SCRIPT;
-        $this->client->eval($luaScript, 1, $key, $uuid);
+        $result = $this->client->eval($luaScript, 1, $key, $uuid);
+        if ($result) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

@@ -8,7 +8,7 @@ help() {
     echo "Tests Runner for PHP Projects"
     echo
     echo -e "\033[33mUsage:\033[0m"
-    echo "  scripts/run-tests <path> --xdebug --filter <expr> -p <num> --coverage-html <path> "
+    echo "  scripts/tests-runner <path> --xdebug --filter <expr> -p <num> --coverage-html <path> "
     echo
     echo -e "\033[33mOptions:\033[0m"
     echo -e "  \033[32mpath\033[0m                           The path or file that contains test files."
@@ -52,15 +52,15 @@ prepare_params() {
         fi
     done
 }
-prepare_params "$*"
+prepare_params $*
 
 run() {
     if [[ "$use_paratest" == "0" ]]; then
-        $php "$params" vendor/bin/phpunit "$*"
+        $php $params vendor/bin/phpunit $*
     elif [[ "$use_coverage" == "1" ]]; then
-        $php "$params" vendor/bin/paratest "$*"
+        $php $params vendor/bin/paratest $*
     else
-        $php "$params" vendor/bin/paratest -f "$*"
+        $php $params vendor/bin/paratest -f $*
     fi
 }
 
@@ -82,6 +82,6 @@ case $1 in
     help
     ;;
 *)
-    run $(filter_args "$*")
+    run $(filter_args $*)
     ;;
 esac

@@ -17,7 +17,7 @@ interface SyncMutex
      * @param  int|null  $sleepMs
      * @return void
      */
-    public function lock(string $key, string $uuid, ?int $ttl = null, ?int $maxWait = null, ?int $sleepMs = null): void;
+    public function lock(string $key, string $uuid, ?int $ttl = null, ?int $maxWait = null, ?int $sleepMs = null): bool;
 
     /**
      * 解锁
@@ -26,7 +26,7 @@ interface SyncMutex
      * @param  string  $uuid
      * @return void
      */
-    public function unlock(string $key, string $uuid): void;
+    public function unlock(string $key, string $uuid): bool;
 
     /**
      * 已完成上锁
