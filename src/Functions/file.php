@@ -260,14 +260,13 @@ if (! function_exists('csv_to_array')) {
      * ]
      *
      */
-    function csv_to_array(string $file, bool $parseHeader = true, int $length = 1000, string $delimiter = ','): array
+    function csv_to_array(string $file, bool $parseHeader = true, int $startRow = 1, int $length = 1000, string $delimiter = ','): array
     {
         fail_if_file_not_exists($file);
         fail_if_file_not_readable($file);
         if ($length > PHP_INT_MAX || $length < 0) {
             throw new InvalidArgumentException('invalid positive integer');
         }
-
 
         $rows = $header = [];
         $handle = file_open_or_fail($file, 'r');
@@ -280,7 +279,21 @@ if (! function_exists('csv_to_array')) {
         }
 
         try {
+            $currentRow = 0;
             while (($row = fgetcsv($handle, $length, $delimiter)) !== false) {
+                $currentRow++;
+
+                // 如果当前行号还没有达到 startRow，继续下一次循环
+                if ($currentRow < $startRow) {
+                    continue;
+                }
+
+                // 从 startR ow 开始处理数据
+                if ($currentRow === $startRow && $parseHeader) {
+                    $header = $row;
+                    continue;
+                }
+
                 if ($parseHeader) {
                     if (is_array($header) && is_array($row)) {
                         $rows[] = array_combine($header, $row);

@@ -9,14 +9,14 @@
         }
     ],
     "require": {
-        "php": "7.4.*",
+        "php": "7.4.*|8.*",
         "ext-json": "*",
         "ext-bcmath": "*",
         "ext-zip": "*",
         "laravel/helpers": "^1.4",
         "phpoffice/phpspreadsheet": "^1.26",
-        "illuminate/validation": "^6.0",
-        "illuminate/database": "^6.20.44",
+        "illuminate/validation": "*",
+        "illuminate/database": "*",
         "predis/predis": "^2.1"
     },
     "require-dev": {
