@@ -6,14 +6,14 @@ namespace Luyiyuan\Toolkits\Functions;
 
 use InvalidArgumentException;
 
-if (! function_exists('compare_float_value')) {
+if (!function_exists('compare_float_value')) {
     /**
      * 比较两个浮点数的大小
      *
-     * @param  float  $a
-     * @param  float  $b
-     * @param  string  $operator
-     * @param  float  $epsilon
+     * @param float $a
+     * @param float $b
+     * @param string $operator
+     * @param float $epsilon
      * @return bool
      */
     function compare_float_value(float $a, float $b, string $operator = '===', float $epsilon = 0.00001): bool
@@ -72,9 +72,9 @@ if (! function_exists('compare_float_value')) {
     }
 }
 
-if (! function_exists('double')) {
+if (!function_exists('double')) {
     /**
-     * @param  mixed  $value
+     * @param mixed $value
      * @return int|float
      */
     function double($value)
@@ -84,5 +84,28 @@ if (! function_exists('double')) {
         }
 
         throw new InvalidArgumentException('The value must be an integer or float.');
+    }
+}
+
+if (!function_exists('format_number')) {
+    function format_number($value)
+    {
+        if (is_int($value) || is_float($value)) {
+            return $value;
+        }
+
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        if (strpos($value, '.') !== false) {
+            $number = floatval($value);
+            if (intval($number) == $number) {
+                return intval($number);
+            }
+            $value = $number;
+        }
+
+        return $value;
     }
 }

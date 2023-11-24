@@ -59,7 +59,7 @@ if (!function_exists('rank')) {
         string $compareField = 'score',
         string $rankField = 'rank',
         string $rankBaseField = 'rank_base',
-        array  $specialValues = ['缺考', null],
+        array  $specialValues = ['缺考', null, ''],
         int    $precision = 2
     ): array
     {
