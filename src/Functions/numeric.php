@@ -6,7 +6,7 @@ namespace Luyiyuan\Toolkits\Functions;
 
 use InvalidArgumentException;
 
-if (!function_exists('compare_float_value')) {
+if (! function_exists('compare_float_value')) {
     /**
      * 比较两个浮点数的大小
      *
@@ -72,7 +72,7 @@ if (!function_exists('compare_float_value')) {
     }
 }
 
-if (!function_exists('double')) {
+if (! function_exists('double')) {
     /**
      * @param mixed $value
      * @return int|float
@@ -87,7 +87,7 @@ if (!function_exists('double')) {
     }
 }
 
-if (!function_exists('format_number')) {
+if (! function_exists('format_number')) {
     function format_number($value)
     {
         if (is_int($value) || is_float($value)) {

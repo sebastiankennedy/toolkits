@@ -25,10 +25,10 @@ class ArrayTest extends TestCase
 
     /**
      * @param  string|null  $name
-     * @param  array<mixed>  $data
-     * @param $dataName
+     * @param  array  $data
+     * @param  string  $dataName
      */
-    public function __construct(?string $name = null, array $data = [], $dataName = '')
+    public function __construct(?string $name = null, array $data = [], string $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->file = __DIR__ . '/./../Data/Csv/scores.csv';
@@ -82,9 +82,9 @@ class ArrayTest extends TestCase
 
     /**
      * @dataProvider array_index_by_case
-     * @param  array<mixed>  $data
-     * @param  array<mixed>|string|int|callable  $key
-     * @param  array<mixed>  $expected
+     * @param  array  $data
+     * @param  array|string|int|callable  $key
+     * @param  array  $expected
      * @return void
      */
     public function test_array_index_by(array $data, $key, array $expected): void
@@ -106,10 +106,10 @@ class ArrayTest extends TestCase
 
     /**
      * @dataProvider array_order_by_case
-     * @param  array<mixed>  $data
+     * @param  array  $data
      * @param  string  $fieldA
      * @param  int  $order
-     * @param  array<mixed>  $expected
+     * @param  array  $expected
      * @return void
      */
     public function test_array_order_by(array $data, string $fieldA, int $order, array $expected): void

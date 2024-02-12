@@ -6,10 +6,10 @@ namespace Luyiyuan\Toolkits\Functions;
 
 use InvalidArgumentException;
 
-if (!function_exists('compare_grade')) {
+if (! function_exists('compare_grade')) {
     /**
-     * @param string|null $a
-     * @param string|null $b
+     * @param  string|null  $a
+     * @param  string|null  $b
      * @return int
      */
     function compare_grade(?string $a, ?string $b): int
@@ -43,26 +43,26 @@ if (!function_exists('compare_grade')) {
     }
 }
 
-if (!function_exists('rank')) {
+if (! function_exists('rank')) {
     /**
-     * @param array<mixed> $rows
-     * @param string $compareField
-     * @param int $precision
-     * @param string $rankField
-     * @param string $rankBaseField
-     * @return array<mixed>
+     * @param  array  $rows
+     * @param  string  $compareField
+     * @param  string  $rankField
+     * @param  string  $rankBaseField
+     * @param  array  $specialValues
+     * @param  int  $precision
+     * @return array
      *
      * @link https://www.php.net/manual/zh/array.sorting.php
      */
     function rank(
-        array  $rows,
+        array $rows,
         string $compareField = 'score',
         string $rankField = 'rank',
         string $rankBaseField = 'rank_base',
-        array  $specialValues = ['缺考', null, ''],
-        int    $precision = 2
-    ): array
-    {
+        array $specialValues = ['缺考', null, ''],
+        int $precision = 2
+    ): array {
         uasort($rows, function ($a, $b) use ($compareField, $specialValues, $precision) {
             $valueA = is_array($a) ? $a[$compareField] : $a->$compareField;
             $valueB = is_array($b) ? $b[$compareField] : $b->$compareField;
@@ -121,13 +121,13 @@ if (!function_exists('rank')) {
     }
 }
 
-if (!function_exists('array_index_by')) {
+if (! function_exists('array_index_by')) {
     /**
      * 自定义索引数组
      *
-     * @param array<mixed> $items
-     * @param array<mixed>|string|int|callable $key
-     * @return array<mixed>
+     * @param  array  $items
+     * @param  array|string|int|callable  $key
+     * @return array
      */
     function array_index_by(array $items, $key): array
     {
@@ -151,12 +151,12 @@ if (!function_exists('array_index_by')) {
     }
 }
 
-if (!function_exists('value_of_key')) {
+if (! function_exists('value_of_key')) {
     /**
      * 灵活获取键的值
      *
-     * @param array<mixed>|object $item
-     * @param array<mixed>|int|string $key
+     * @param  array|object  $item
+     * @param  array|int|string  $key
      * @return mixed
      */
     function value_of_key($item, $key)
@@ -179,10 +179,10 @@ if (!function_exists('value_of_key')) {
     }
 }
 
-if (!function_exists('array_order_by')) {
+if (! function_exists('array_order_by')) {
     /**
      * 多字段排序
-     * @param mixed $args
+     * @param  mixed  $args
      * @return mixed|null
      * @example
      * $data[] = array('volume' => 67, 'edition' => 2);
@@ -214,36 +214,36 @@ if (!function_exists('array_order_by')) {
     }
 }
 
-if (!function_exists('array_sort_by_keys')) {
-    function array_sort_by_keys(array $keys, array $array): array
+if (! function_exists('array_sort_by_keys')) {
+    /**
+     * @param  array  $array
+     * @param  array  $keys
+     * @return array
+     */
+    function array_sort_by_keys(array $array, array $keys): array
     {
+        // 获取键的位置映射
+        $keyPositions = array_flip($keys);
         $sortedArray = [];
         foreach ($array as $data) {
-            uksort($data, function ($a, $b) use ($keys) {
-                $posA = array_search($a, $keys);
-                $posB = array_search($b, $keys);
-
-                if ($posA === false) {
-                    $posA = PHP_INT_MAX;
-                }
-                if ($posB === false) {
-                    $posB = PHP_INT_MAX;
-                }
-
-                return $posA - $posB;
+            uksort($data, function ($a, $b) use ($keyPositions) {
+                $posA = $keyPositions[$a] ?? PHP_INT_MAX;
+                $posB = $keyPositions[$b] ?? PHP_INT_MAX;
+                return $posA <=> $posB;
             });
             $sortedArray[] = $data;
         }
+
         return $sortedArray;
     }
 }
 
-if (!function_exists('is_subset_of_set')) {
+if (! function_exists('is_subset_of_set')) {
     /**
      * 是否为子集
      *
-     * @param array<mixed> $subset
-     * @param array<mixed> $set
+     * @param  array  $subset
+     * @param  array  $set
      * @return bool
      */
     function is_subset_of_set(array $subset, array $set): bool
@@ -252,41 +252,41 @@ if (!function_exists('is_subset_of_set')) {
     }
 }
 
-if (!function_exists('is_intersection_of_set')) {
+if (! function_exists('is_intersection_of_set')) {
     /**
      * 是否为交集
      *
-     * @param array<mixed> $intersection
-     * @param array<mixed> $set
+     * @param  array  $intersection
+     * @param  array  $set
      * @return bool
      */
     function is_intersection_of_set(array $intersection, array $set): bool
     {
-        return !empty(array_intersect($intersection, $set));
+        return ! empty(array_intersect($intersection, $set));
     }
 }
 
-if (!function_exists('is_difference_of_set')) {
+if (! function_exists('is_difference_of_set')) {
     /**
      * 是否为差集
      *
-     * @param array<mixed> $difference
-     * @param array<mixed> $set
+     * @param  array  $difference
+     * @param  array  $set
      * @return bool
      */
     function is_difference_of_set(array $difference, array $set): bool
     {
-        return !empty(array_diff($difference, $set));
+        return ! empty(array_diff($difference, $set));
     }
 }
 
-if (!function_exists('array_swap')) {
+if (! function_exists('array_swap')) {
     /**
      * 交换数组元素
      *
-     * @param array<mixed> $data
-     * @param int|string $i
-     * @param int|string $j
+     * @param  array  $data
+     * @param  int|string  $i
+     * @param  int|string  $j
      * @return void
      */
     function array_swap(array &$data, $i, $j): void
@@ -297,10 +297,20 @@ if (!function_exists('array_swap')) {
     }
 }
 
-if (!function_exists('array_combine_values')) {
-    function array_combine_values($keys, $values): array
+if (! function_exists('array_combine_values')) {
+    /**
+     * 通过一个键值数组将一个关联数组组成成为一个索引数组
+     *
+     * @param  array  $keys
+     * @param  array  $values
+     * @return array
+     */
+    function array_combine_values(array $keys, array $values): array
     {
         foreach ($values as &$value) {
+            if (count($value) !== count($keys)) {
+                throw new InvalidArgumentException('The number of keys must match the number of values');
+            }
             $value = array_combine($keys, $value);
         }
         unset($value);
@@ -309,77 +319,125 @@ if (!function_exists('array_combine_values')) {
     }
 }
 
-if (!function_exists('array_remap_keys')) {
-    function array_remap_keys($keysMapping, $array): array
+if (! function_exists('array_remap_keys')) {
+    /**
+     * 遍历一个数组的每个子数组，根据提供的键名映射关系数组，重新映射子数组中的键名，并返回包含所有重新映射后的子数组的新数组。
+     *
+     * @param  array  $array
+     * @param  array  $keysMapping
+     * @return array
+     */
+    function array_remap_keys(array $array, array $keysMapping): array
     {
         $remappedArray = [];
         foreach ($array as $item) {
+            $newItem = [];
             foreach ($item as $key => $value) {
-                if (isset($keysMapping[$key])) {
-                    $newKey = $keysMapping[$key];
-                    $item[$newKey] = $value;
-                    unset($item[$key]);
+                // 直接使用新键，如果没有映射则使用原键
+                $newKey = $keysMapping[$key] ?? $key;
+                if (! isset($newItem[$newKey]) || $newKey !== $key) {
+                    $newItem[$newKey] = $value;
                 }
             }
             $remappedArray[] = $item;
         }
+
         return $remappedArray;
     }
 }
 
-if (!function_exists('array_unset_keys')) {
-    function array_unset_keys($keys, &$array)
+if (! function_exists('array_unset_keys')) {
+    function array_unset_keys(array &$array, array $keys)
     {
+        $keys = array_flip($keys);
         foreach ($array as &$data) {
             foreach ($data as $key => $value) {
-                if (in_array($key, $keys)) {
+                if (isset($keys[$key])) {
                     unset($data[$key]);
                 }
             }
-        }
-    }
-}
-
-if (!function_exists('array_sum_columns_to_new_field')) {
-    function array_sum_columns_to_new_field(array &$array, array $columns, string $newField)
-    {
-        foreach ($array as &$data) {
-            $sum = 0;
-            foreach ($columns as $key) {
-                if (isset($data[$key])) {
-                    $sum += (float)$data[$key];
-                }
-            }
-            $data[$newField] = (string)$sum;
         }
         unset($data);
     }
 }
 
-if (!function_exists('array_group_by')) {
-    function array_group_by(array $array, string $groupBy): array
+if (! function_exists('array_sum_columns_to_new_column')) {
+    /**
+     * 将指定列的值求和，并将结果作为新列添加到数组的每个元素中。
+     *
+     * @param  array  $array
+     * @param  array  $columns
+     * @param  string  $newColumn
+     * @return void
+     */
+    function array_sum_columns_to_new_column(array &$array, array $columns, string $newColumn)
     {
+        foreach ($array as &$data) {
+            $sum = 0.0;
+            foreach ($columns as $key) {
+                if (isset($data[$key])) {
+                    $sum += (float)$data[$key];
+                }
+            }
+            $data[$newColumn] = $sum;
+        }
+        unset($data);
+    }
+}
+
+if (! function_exists('array_group_by')) {
+    function array_group_by(array $array, $groupByKey, bool $keepKey = false): array
+    {
+        if (! is_int($groupByKey) && ! is_string($groupByKey) && ! is_callable($groupByKey) && ! is_array($groupByKey)) {
+            throw new InvalidArgumentException('unsupported key type');
+        }
+
         $groupedArray = [];
-        foreach ($array as $item) {
-            if (isset($item[$groupBy])) {
-                $groupedArray[$item[$groupBy]][] = $item;
+        foreach ($array as $key => $item) {
+            if (is_callable($groupByKey)) {
+                $value = $groupByKey($item, $key);
+            } else {
+                $value = value_of_key($item, $key);
+            }
+
+            if ($keepKey) {
+                $groupedArray[$value][$key] = $item;
+            } else {
+                $groupedArray[$value][] = $item;
             }
         }
+
         return $groupedArray;
     }
 }
-if (!function_exists('array_fill_missing_keys')) {
-    function array_fill_missing_keys(array $keys, array $array, ?string $value = null)
+if (! function_exists('array_fill_missing_keys')) {
+    /**
+     * 为数组中缺失的键填充指定的值。
+     *
+     * @param  array  $array
+     * @param  array  $keys
+     * @param  mixed  $value
+     * @return array
+     */
+    function array_fill_missing_keys(array $array, array $keys, $value = null): array
     {
-        $filledArray = [];
-        foreach ($array as $row => $data) {
+        if (! is_numeric($value) || ! is_string($value) || ! is_null($value) || ! is_callable($value)) {
+            throw new InvalidArgumentException('unsupported value.');
+        }
+
+        foreach ($array as $row => &$data) {
             foreach ($keys as $key) {
-                if (!array_key_exists($key, $data)) {
-                    $data[$key] = $value;
-                    $filledArray[$row] = $data;
+                if (! array_key_exists($key, $data)) {
+                    if (is_callable($value)) {
+                        $data[$key] = $value($row, $data);
+                    } else {
+                        $data[$key] = value_of_key($data, $value);
+                    }
                 }
             }
         }
-        return $filledArray;
+        unset($data);
+
+        return $array;
     }
 }
